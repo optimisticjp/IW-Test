@@ -1,32 +1,35 @@
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
-type Variant = 'primary' | 'outline' | 'ghost'
+type Variant = 'primary' | 'secondary' | 'outline' | 'ghost'
 type Size    = 'sm' | 'md' | 'lg'
 
 interface ButtonProps {
-  variant?:  Variant
-  size?:     Size
-  href?:     string
-  external?: boolean
+  variant?:   Variant
+  size?:      Size
+  href?:      string
+  external?:  boolean
   className?: string
-  onClick?:  () => void
-  type?:     'button' | 'submit' | 'reset'
-  disabled?: boolean
-  children:  React.ReactNode
+  onClick?:   () => void
+  type?:      'button' | 'submit' | 'reset'
+  disabled?:  boolean
+  children:   React.ReactNode
 }
 
 const variantClasses: Record<Variant, string> = {
-  primary: 'bg-gradient-brand text-white shadow-btn hover:shadow-btn-lg hover:-translate-y-0.5 transition-all duration-200',
-  outline: 'bg-transparent text-ink border-[1.5px] border-slate-300 hover:border-brand hover:text-brand hover:bg-brand/5 transition-all duration-200',
-  ghost:   'bg-white/10 text-slate-100 border-[1.5px] border-white/20 hover:bg-white/20 transition-all duration-200',
+  primary:   'bg-gradient-brand text-white shadow-btn hover:shadow-btn-lg hover:-translate-y-0.5 transition-all duration-200',
+  secondary: 'bg-brand-50 text-brand-700 border-[1.5px] border-brand-200 hover:bg-brand-100 hover:border-brand-300 transition-all duration-200',
+  outline:   'bg-transparent text-slate-700 border-[1.5px] border-slate-300 hover:border-brand-500 hover:text-brand-600 hover:bg-brand-50/50 transition-all duration-200',
+  ghost:     'bg-white/10 text-slate-100 border-[1.5px] border-white/20 hover:bg-white/20 transition-all duration-200',
 }
 
 const sizeClasses: Record<Size, string> = {
-  sm: 'px-4 py-2 text-xs font-bold rounded-lg',
-  md: 'px-[26px] py-[13px] text-sm font-bold rounded-xl',
-  lg: 'px-8 py-[15px] text-base font-bold rounded-xl',
+  sm: 'px-4 py-2 text-xs font-bold rounded-lg min-h-[36px]',
+  md: 'px-[26px] py-[13px] text-sm font-bold rounded-xl min-h-[44px]',
+  lg: 'px-8 py-[15px] text-base font-bold rounded-xl min-h-[48px]',
 }
+
+const focusClasses = 'focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 focus-visible:outline-none'
 
 export default function Button({
   variant  = 'primary',
@@ -43,6 +46,7 @@ export default function Button({
     'inline-flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer select-none',
     variantClasses[variant],
     sizeClasses[size],
+    focusClasses,
     disabled && 'opacity-50 cursor-not-allowed pointer-events-none',
     className,
   )

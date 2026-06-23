@@ -9,10 +9,12 @@
 // ── SITE META ────────────────────────────────────────────────
 export const SITE = {
   name:        'Infinite Weblinks',
-  tagline:     'The growth agency for brands that mean business',
+  tagline:     'Grow your business digitally!',
   description: 'We build your website first — no upfront fee. Then we run the ads, funnels, social growth and AI search that turn it into your best salesperson.',
   url:         'https://infiniteweblinks.com',
   email:       'hello@infiniteweblinks.com',
+  /** WhatsApp number with country code — e.g. '+447700000000'. Leave empty to hide button. */
+  whatsapp:    '',
   instagram:   'https://www.instagram.com/infiniteweblinks',
   linkedin:    'https://www.linkedin.com/company/infiniteweblinks',
   /** Replace this with your actual Formspree form ID */
@@ -48,7 +50,7 @@ export const HERO_STATS = [
 // ── AUDIENCE CARDS (WHO WE HELP) ─────────────────────────────
 export const AUDIENCES = [
   {
-    accentColor: '#0a5bc4',
+    accentColor: '#075aaa',
     label:       'Ecommerce & Shopify',
     title:       'More traffic, more conversions, more repeat buyers',
     desc:        'Shopify builds, paid ads, email automation, ecommerce SEO and loyalty programs for D2C brands ready to scale.',
@@ -98,7 +100,7 @@ export const AUDIENCES = [
 export const PILLARS = [
   {
     icon:     '🌐',
-    title:    'Build',
+    title:    'Websites & Stores',
     desc:     'Websites, Shopify stores, landing pages, apps and custom web software built to convert',
     href:     '/services/build',
     services: [
@@ -112,7 +114,7 @@ export const PILLARS = [
   },
   {
     icon:     '📢',
-    title:    'Paid Ads',
+    title:    'Paid Growth',
     desc:     'Google, Meta, TikTok and YouTube ads that pay for themselves — managed by specialists',
     href:     '/services/paid-ads',
     services: [
@@ -126,7 +128,7 @@ export const PILLARS = [
   },
   {
     icon:     '📈',
-    title:    'Social Growth',
+    title:    'Social & Creator Growth',
     desc:     'Instagram and YouTube growth strategy, viral content frameworks and hands-on coaching',
     href:     '/services/social-growth',
     services: [
@@ -140,7 +142,7 @@ export const PILLARS = [
   },
   {
     icon:     '🤖',
-    title:    'AI & Search',
+    title:    'SEO & AI Search',
     desc:     'GEO, AEO and SEO so you get found on Google and recommended by AI',
     href:     '/services/ai-search',
     services: [
@@ -154,7 +156,7 @@ export const PILLARS = [
   },
   {
     icon:     '🔧',
-    title:    'Funnels & CRO',
+    title:    'Funnels & Conversion',
     desc:     'Sales funnels, course launches, CRO and conversion copywriting that moves people to act',
     href:     '/services/funnels',
     services: [
@@ -168,7 +170,7 @@ export const PILLARS = [
   },
   {
     icon:     '📧',
-    title:    'Retain & Scale',
+    title:    'Email / CRM / Retention',
     desc:     'Email, WhatsApp, loyalty programs, referrals and analytics — your growth back-end',
     href:     '/services/retain-scale',
     services: [
@@ -193,7 +195,7 @@ export const FREE_WEBSITE_POINTS = [
 export const WEBSITE_CARD_ROWS = [
   { label: 'Page Speed',   value: '94 / 100',            valueColor: '#22c55e' },
   { label: 'Mobile First', value: '✓ Built fast',         valueColor: '#82adf5' },
-  { label: 'Setup Fee',    value: '$0 to start',          valueColor: '#0a5bc4' },
+  { label: 'Setup Fee',    value: '$0 to start',          valueColor: '#075aaa' },
   { label: 'Ownership',    value: '100% yours',           valueColor: '#a78bfa' },
   { label: 'Goal',         value: 'Visitors → Customers', valueColor: '#64748b' },
 ]
@@ -238,12 +240,12 @@ export const FOOTER_COLUMNS = [
   {
     title: 'Services',
     links: [
-      { label: 'Build',          href: '/services/build'         },
-      { label: 'Paid Ads',       href: '/services/paid-ads'      },
-      { label: 'Social Growth',  href: '/services/social-growth' },
-      { label: 'AI & Search',    href: '/services/ai-search'     },
-      { label: 'Funnels & CRO',  href: '/services/funnels'       },
-      { label: 'Retain & Scale', href: '/services/retain-scale'  },
+      { label: 'Websites & Stores',     href: '/services/build'         },
+      { label: 'Paid Growth',           href: '/services/paid-ads'      },
+      { label: 'Social & Creator Growth', href: '/services/social-growth' },
+      { label: 'SEO & AI Search',       href: '/services/ai-search'     },
+      { label: 'Funnels & Conversion',  href: '/services/funnels'       },
+      { label: 'Email / CRM / Retention', href: '/services/retain-scale' },
     ],
   },
   {

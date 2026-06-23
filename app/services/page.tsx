@@ -1,6 +1,5 @@
 'use client'
 
-import type { Metadata } from 'next'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Button from '@/components/ui/Button'

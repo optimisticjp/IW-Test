@@ -1,15 +1,55 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
-import Nav             from '@/components/layout/Nav'
-import Footer          from '@/components/layout/Footer'
-import WhatsAppButton  from '@/components/ui/WhatsAppButton'
+import Nav              from '@/components/layout/Nav'
+import Footer           from '@/components/layout/Footer'
+import WhatsAppButton   from '@/components/ui/WhatsAppButton'
+import GoogleAnalytics  from '@/components/GoogleAnalytics'
 
 const inter = Inter({
   subsets:  ['latin'],
   variable: '--font-inter',
   display:  'swap',
 })
+
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets:  ['latin'],
+  variable: '--font-plus-jakarta',
+  display:  'swap',
+  weight:   ['400', '500', '600', '700', '800'],
+})
+
+const jsonLdOrganization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Infinite Weblinks',
+  url: 'https://infiniteweblinks.com',
+  logo: 'https://infiniteweblinks.com/logo.png',
+  description: 'Full-stack digital growth agency for ecommerce brands, creators and startups. We build your website first at no upfront cost.',
+  contactPoint: {
+    '@type': 'ContactPoint',
+    email: 'hello@infiniteweblinks.com',
+    contactType: 'customer service',
+  },
+  sameAs: [
+    'https://www.instagram.com/infiniteweblinks',
+    'https://www.linkedin.com/company/infiniteweblinks',
+  ],
+  areaServed: ['US', 'GB', 'CA', 'AU', 'NZ', 'EU'],
+}
+
+const jsonLdWebSite = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Infinite Weblinks',
+  url: 'https://infiniteweblinks.com',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://infiniteweblinks.com/?s={search_term_string}',
+    'query-input': 'required name=search_term_string',
+  },
+}
 
 export const metadata: Metadata = {
   title: {
@@ -44,20 +84,28 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${plusJakarta.variable}`}>
+      <head>
+        <Script
+          id="schema-org"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify([jsonLdOrganization, jsonLdWebSite]) }}
+        />
+      </head>
       <body className="font-sans">
-        <Nav />
-        <main>{children}</main>
-        <Footer />
+        {/* Skip to main content — keyboard accessibility */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:bg-brand-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-bold focus:text-sm"
+        >
+          Skip to main content
+        </a>
 
-        {/*
-          WhatsApp floating button — visible on all pages.
-          To activate: add your WhatsApp number to lib/constants.ts
-          Find the SITE object and add:
-            whatsapp: '+447700000000',  (your number with country code)
-          If whatsapp is missing or empty, the button won't render.
-        */}
+        <Nav />
+        <main id="main-content">{children}</main>
+        <Footer />
         <WhatsAppButton />
+        <GoogleAnalytics />
       </body>
     </html>
   )
