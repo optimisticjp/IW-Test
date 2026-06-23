@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { TESTIMONIALS } from '@/lib/constants'
+import GlassCard from '@/components/ui/GlassCard'
 
 const container = {
   hidden: {},
@@ -14,7 +15,7 @@ const card = {
 
 export default function Testimonials() {
   return (
-    <section className="bg-snow py-[clamp(60px,8vw,96px)] px-5">
+    <section className="bg-surface-soft py-[clamp(60px,8vw,96px)] px-5">
       <div className="max-w-[1080px] mx-auto">
 
         {/* Header */}
@@ -22,7 +23,7 @@ export default function Testimonials() {
           <div className="inline-flex items-center gap-1.5 bg-brand/[0.07] border border-brand/20 rounded-full px-3.5 py-1.5 text-[11px] font-extrabold tracking-[0.05em] uppercase text-brand mb-5">
             Results
           </div>
-          <h2 className="text-ink">What our clients say</h2>
+          <h2 className="text-slate-900">What our clients <span className="gradient-text">say</span></h2>
           {/* Remove this note once you have real testimonials */}
           <p className="text-xs text-slate-400 mt-2">
             Replace placeholder testimonials with real ones in <code className="font-mono text-slate-500">lib/constants.ts</code>
@@ -38,35 +39,33 @@ export default function Testimonials() {
           variants={container}
         >
           {TESTIMONIALS.map((t, i) => (
-            <motion.div
-              key={i}
-              variants={card}
-              className="bg-white border-[1.5px] border-slate-200 rounded-2xl p-7 hover:shadow-card transition-shadow duration-200"
-            >
-              {/* Stars */}
-              <div className="flex gap-0.5 mb-4">
-                {Array.from({ length: 5 }).map((_, j) => (
-                  <span key={j} className="text-amber-400 text-sm">★</span>
-                ))}
-              </div>
-
-              {/* Quote */}
-              <p className="text-[15px] text-slate-500 leading-[1.7] mb-5 italic">
-                &ldquo;{t.quote}&rdquo;
-              </p>
-
-              {/* Attribution */}
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-brand flex items-center justify-center text-white font-extrabold text-sm shrink-0">
-                  {t.initial}
+            <motion.div key={i} variants={card}>
+              <GlassCard hover className="p-7 h-full">
+                {/* Stars */}
+                <div className="flex gap-0.5 mb-4">
+                  {Array.from({ length: 5 }).map((_, j) => (
+                    <span key={j} className="text-amber-400 text-sm">★</span>
+                  ))}
                 </div>
-                <div>
-                  <div className="text-sm font-bold text-ink">{t.name}</div>
-                  <div className="text-xs text-slate-400">
-                    {t.role} · {t.company}
+
+                {/* Quote */}
+                <p className="text-[15px] text-slate-700 leading-[1.7] mb-5 italic">
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+
+                {/* Attribution */}
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-extrabold text-sm shrink-0">
+                    {t.initial}
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold text-slate-900">{t.name}</div>
+                    <div className="text-xs text-slate-400">
+                      {t.role} · {t.company}
+                    </div>
                   </div>
                 </div>
-              </div>
+              </GlassCard>
             </motion.div>
           ))}
         </motion.div>

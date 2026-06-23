@@ -17,6 +17,7 @@ import Link from 'next/link'
 import Button from '@/components/ui/Button'
 import FinalCTA from '@/components/sections/FinalCTA'
 import { SITE, MARKETS } from '@/lib/constants'
+import MeshGradient from '@/components/ui/MeshGradient'
 
 // ── EDIT THESE ───────────────────────────────────────────────
 const FOUNDER_NAME     = 'Your Name'        // [PLACEHOLDER] replace with your name
@@ -89,19 +90,15 @@ export default function AboutPage() {
   return (
     <>
       {/* ── HERO ──────────────────────────────────────────── */}
-      <section
-        className="relative overflow-hidden pt-28 pb-20 px-5 text-center"
-        style={{ background: 'linear-gradient(160deg, #070e1c 0%, #0c1340 55%, #070e1c 100%)' }}
-      >
-        <div className="absolute inset-0 dot-grid-dark pointer-events-none" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60vw] max-w-[640px] aspect-square rounded-full blur-3xl bg-brand/15 pointer-events-none animate-glow-pulse" />
+      <section className="relative overflow-hidden pt-28 pb-20 px-5 text-center bg-surface-soft">
+        <MeshGradient intensity="low" />
 
         <div className="relative max-w-[680px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-1.5 bg-brand/20 border border-brand/40 rounded-full px-3.5 py-1.5 text-[11px] font-extrabold tracking-[0.05em] uppercase text-[#82adf5] mb-5"
+            className="inline-flex items-center gap-1.5 bg-brand-50 border border-brand-200 rounded-full px-3.5 py-1.5 text-[11px] font-extrabold tracking-[0.05em] uppercase text-brand-700 mb-5"
           >
             Who we are
           </motion.div>
@@ -110,7 +107,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-slate-100 text-[clamp(32px,5.5vw,58px)] mb-5"
+            className="text-slate-900 text-[clamp(32px,5.5vw,58px)] mb-5"
           >
             Built to grow businesses,{' '}
             <span className="gradient-text">not just build websites</span>
@@ -120,7 +117,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-[#8ba3c0] text-[clamp(16px,2vw,18px)] leading-[1.7] max-w-[500px] mx-auto"
+            className="text-slate-500 text-[clamp(16px,2vw,18px)] leading-[1.7] max-w-[500px] mx-auto"
           >
             A remote team of specialists who believe the website is the beginning,
             not the deliverable. We build it first — then everything that makes it work.
@@ -235,18 +232,15 @@ export default function AboutPage() {
       </section>
 
       {/* ── WHERE WE WORK ─────────────────────────────────── */}
-      <section
-        className="py-[clamp(48px,6vw,72px)] px-5"
-        style={{ background: 'linear-gradient(160deg, #070e1c 0%, #0c1340 55%, #070e1c 100%)' }}
-      >
+      <section className="py-[clamp(48px,6vw,72px)] px-5 bg-brand-900">
         <div className="max-w-[860px] mx-auto text-center">
-          <p className="text-xs font-extrabold tracking-widest uppercase text-[#3d566e] mb-5">
+          <p className="text-xs font-extrabold tracking-widest uppercase text-brand-300 mb-5">
             Remote-first · Global reach
           </p>
           <h2 className="text-slate-100 text-[clamp(24px,4vw,38px)] mb-5">
             We work with brands everywhere
           </h2>
-          <p className="text-[#8ba3c0] text-base leading-[1.7] max-w-[520px] mx-auto mb-10">
+          <p className="text-slate-300 text-base leading-[1.7] max-w-[520px] mx-auto mb-10">
             No office. No geographic limits. Everything happens over email, WhatsApp
             and shared links — which means we can take on the best clients,
             not just the nearest ones.
@@ -255,10 +249,10 @@ export default function AboutPage() {
             {MARKETS.map((m) => (
               <div
                 key={m.name}
-                className="flex items-center gap-2 bg-ink-card border border-ink-border rounded-full px-4 py-2"
+                className="flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2"
               >
                 <span className="text-base">{m.flag}</span>
-                <span className="text-xs font-medium text-slate-400">{m.name}</span>
+                <span className="text-xs font-medium text-brand-300">{m.name}</span>
               </div>
             ))}
           </div>

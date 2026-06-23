@@ -41,7 +41,7 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
     pillarLabel: 'Build',
     title:       'Websites and digital products built to convert',
     subtitle:    'We design and build sites that do one thing well — turn visitors into customers. Fast, mobile-first and built around the action you want people to take.',
-    accentColor: '#0a5bc4',
+    accentColor: '#075aaa',
     seoTitle:    'Web Design & Development — Shopify, Landing Pages & Custom Builds',
     seoDesc:     'Custom websites, Shopify stores, landing pages and web apps built to convert. Based remotely, serving ecommerce brands, creators and startups worldwide.',
     services: [
@@ -105,7 +105,7 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
     pillarLabel: 'Paid Ads',
     title:       'Ads that pay for themselves',
     subtitle:    'We manage Google, Meta, TikTok and YouTube ads with one goal — profitable growth. No vanity metrics, no fluff. Spend goes in, revenue comes out.',
-    accentColor: '#0a5bc4',
+    accentColor: '#075aaa',
     seoTitle:    'Paid Ads Management — Google, Meta, TikTok & YouTube Ads Agency',
     seoDesc:     'Performance-focused paid ads management across Google, Meta, TikTok, YouTube and Amazon. Ecommerce brands, creators and startups across the US, UK and beyond.',
     services: [
@@ -287,7 +287,7 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
     pillarLabel: 'Funnels & CRO',
     title:       'Funnels that turn visitors into buyers',
     subtitle:    'We build the full sequence — landing page, offer, email follow-up, upsell — so the traffic you send somewhere actually converts into revenue.',
-    accentColor: '#0a5bc4',
+    accentColor: '#075aaa',
     seoTitle:    'Funnel Building Agency — Sales Funnels, Course Launches, GoHighLevel & Copywriting',
     seoDesc:     'Sales funnels, course launch funnels, webinar funnels, GoHighLevel setups and high-converting funnel copy. For ecommerce brands, coaches and online businesses.',
     services: [
