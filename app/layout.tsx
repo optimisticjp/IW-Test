@@ -1,13 +1,14 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Nav    from '@/components/layout/Nav'
-import Footer from '@/components/layout/Footer'
+import Nav             from '@/components/layout/Nav'
+import Footer          from '@/components/layout/Footer'
+import WhatsAppButton  from '@/components/ui/WhatsAppButton'
 
 const inter = Inter({
-  subsets: ['latin'],
+  subsets:  ['latin'],
   variable: '--font-inter',
-  display: 'swap',
+  display:  'swap',
 })
 
 export const metadata: Metadata = {
@@ -48,6 +49,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Nav />
         <main>{children}</main>
         <Footer />
+
+        {/*
+          WhatsApp floating button — visible on all pages.
+          To activate: add your WhatsApp number to lib/constants.ts
+          Find the SITE object and add:
+            whatsapp: '+447700000000',  (your number with country code)
+          If whatsapp is missing or empty, the button won't render.
+        */}
+        <WhatsAppButton />
       </body>
     </html>
   )
