@@ -20,7 +20,7 @@ export default function WhoWeHelp() {
 
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-1.5 bg-brand/[0.07] border border-brand/20 rounded-full px-3.5 py-1.5 text-[11px] font-extrabold tracking-[0.05em] uppercase text-brand mb-5">
+          <div className="inline-flex items-center gap-1.5 bg-brand-50 border border-brand-200 rounded-full px-3.5 py-1.5 text-[11px] font-extrabold tracking-[0.05em] uppercase text-brand-700 mb-5">
             Who we work with
           </div>
           <h2 className="text-slate-900">One agency. Three kinds of growth.</h2>
@@ -28,7 +28,7 @@ export default function WhoWeHelp() {
 
         {/* Cards */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-5"
+          className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}

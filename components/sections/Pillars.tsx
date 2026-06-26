@@ -1,22 +1,26 @@
 'use client'
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { PILLARS } from '@/lib/constants'
 
+const fadeUp = {
+  hidden:  { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as number[] } },
+}
+const stagger = {
+  hidden:  {},
+  visible: { transition: { staggerChildren: 0.07 } },
+}
+
 export default function Pillars() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null)
-
-  const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i)
-
   return (
     <section className="bg-surface-soft py-[clamp(60px,8vw,96px)] px-5">
       <div className="max-w-[1080px] mx-auto">
 
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-1.5 bg-brand/[0.07] border border-brand/20 rounded-full px-3.5 py-1.5 text-[11px] font-extrabold tracking-[0.05em] uppercase text-brand mb-5">
+          <div className="inline-flex items-center gap-1.5 bg-brand-50 border border-brand-200 rounded-full px-3.5 py-1.5 text-[11px] font-extrabold tracking-[0.05em] uppercase text-brand-700 mb-5">
             What we do
           </div>
           <h2 className="text-slate-900">Six ways to grow your business</h2>
@@ -25,62 +29,65 @@ export default function Pillars() {
           </p>
         </div>
 
-        {/* Pillar grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* Bento grid */}
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[minmax(180px,auto)]"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+          variants={stagger}
+        >
           {PILLARS.map((p, i) => {
-            const isOpen = openIndex === i
+            const isFeatured = i === 0 || i === 3
             return (
               <motion.div
                 key={p.title}
-                layout
-                className="bg-white/75 backdrop-blur-xl border border-white/80 shadow-glass rounded-2xl p-6 cursor-pointer hover:border-brand/40 hover:-translate-y-0.5 hover:bg-white/90 transition-all duration-200"
-                onClick={() => toggle(i)}
+                variants={fadeUp}
+                className={isFeatured ? 'sm:col-span-2' : ''}
               >
-                {/* Top row */}
-                <div className="flex justify-between items-start mb-3">
-                  <span className="text-[30px] leading-none">{p.icon}</span>
-                  <span className="text-xs text-slate-400 font-semibold mt-1">
-                    {isOpen ? '▲' : '▼'}
-                  </span>
-                </div>
+                <Link
+                  href={p.href}
+                  className={`group flex flex-col h-full rounded-card-lg p-6 border transition-all duration-200 hover:-translate-y-0.5 ${
+                    i === 0
+                      ? 'bg-gradient-to-br from-brand-600 to-brand-800 text-white border-brand-700 hover:shadow-glow-sm'
+                      : i === 3
+                      ? 'bg-gradient-to-br from-slate-900 to-brand-950 text-white border-slate-800 hover:shadow-glow-sm'
+                      : 'bg-white border-border hover:border-brand-300 hover:shadow-card-md'
+                  }`}
+                >
+                  <div className="flex justify-between items-start mb-4">
+                    <span className={`text-[28px] leading-none ${i === 0 || i === 3 ? 'brightness-110' : ''}`}>
+                      {p.icon}
+                    </span>
+                    <span className={`text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity ${i === 0 || i === 3 ? 'text-white/70' : 'text-brand-600'}`}>
+                      Explore →
+                    </span>
+                  </div>
 
-                {/* Title + desc */}
-                <h3 className="text-[18px] text-slate-900 mb-2">{p.title}</h3>
-                <p className="text-[13px] text-slate-500 leading-relaxed">{p.desc}</p>
+                  <h3 className={`text-[17px] mb-2 ${i === 0 || i === 3 ? 'text-white' : 'text-slate-900'}`}>
+                    {p.title}
+                  </h3>
+                  <p className={`text-[13px] leading-relaxed flex-1 ${i === 0 || i === 3 ? 'text-white/75' : 'text-slate-500'}`}>
+                    {p.desc}
+                  </p>
 
-                {/* Expanded services list */}
-                <AnimatePresence>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.25, ease: 'easeOut' }}
-                      className="overflow-hidden"
-                    >
-                      <ul className="mt-4 pt-4 border-t border-slate-100 space-y-2">
-                        {p.services.map((svc) => (
-                          <li key={svc} className="flex items-center gap-2 text-[13px] text-slate-700">
-                            <span className="w-1.5 h-1.5 rounded-full bg-brand shrink-0" />
-                            {svc}
-                          </li>
-                        ))}
-                      </ul>
-                      <Link
-                        href={p.href}
-                        className="inline-block mt-4 text-[13px] font-bold text-brand hover:opacity-70 transition-opacity"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        See all {p.title.toLowerCase()} services →
-                      </Link>
-                    </motion.div>
+                  {isFeatured && (
+                    <ul className="mt-4 pt-4 border-t border-white/20 flex flex-wrap gap-2">
+                      {p.services.slice(0, 3).map((svc) => (
+                        <li
+                          key={svc}
+                          className="text-[11px] font-medium bg-white/15 rounded-full px-2.5 py-1 text-white/90"
+                        >
+                          {svc}
+                        </li>
+                      ))}
+                    </ul>
                   )}
-                </AnimatePresence>
-
+                </Link>
               </motion.div>
             )
           })}
-        </div>
+        </motion.div>
 
       </div>
     </section>
