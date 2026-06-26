@@ -1,8 +1,8 @@
 /**
  * INFINITE WEBLINKS — AUDIENCE PAGE CONTENT
  *
- * Content for the three audience-specific pages:
- * /for/ecommerce · /for/creators · /for/startups
+ * Content for the four audience-specific pages:
+ * /for/ecommerce · /for/creators · /for/startups · /for/local
  *
  * Edit headlines, pain points and services here.
  * The AudiencePageTemplate reads from this file automatically.
@@ -295,6 +295,91 @@ export const AUDIENCE_PAGES: Record<string, AudiencePageData> = {
       quote:   'We launched our startup with their team and hit our first 1,000 users in 6 weeks. The site and the Google Ads they set up were a big part of that.',
       name:    'Priya K.',
       role:    'Co-founder · Startup, Australia',
+    },
+  },
+
+  // ── LOCAL & SERVICE BUSINESSES ────────────────────────────
+  local: {
+    slug:        'local',
+    label:       'Local & Service Businesses',
+    title:       'More calls, more bookings, more customers from your local area.',
+    subtitle:    'We build the website, set up Google Search, run local SEO and connect a booking and follow-up system — so your phone stops being quiet.',
+    accentColor: '#059669',
+    seoTitle:    'Digital Marketing for Local & Service Businesses — Get More Leads',
+    seoDesc:     'We help local trades, service providers and small businesses get found on Google, generate more enquiries and convert them into customers. No upfront cost to start.',
+    painPoints: [
+      'Customers search on Google but your business is nowhere to be seen',
+      'You rely on referrals but want a consistent flow of new enquiries',
+      'Your current website looks outdated and sends people to a competitor',
+      'You have no system to follow up with leads who enquired but did not book',
+      'You are paying for ads but not sure if they are actually working',
+    ],
+    services: [
+      {
+        icon: '🌐',
+        name: 'Professional Website',
+        desc: 'A clean, fast, mobile-first website that tells people exactly what you do, where you operate and how to get in touch. Built and ready within a week.',
+        href: '/services/build',
+      },
+      {
+        icon: '📍',
+        name: 'Local SEO',
+        desc: 'Google Business Profile setup and optimisation, local citations, geo-targeted pages and review management — so you appear when people in your area search.',
+        href: '/services/ai-search',
+      },
+      {
+        icon: '📢',
+        name: 'Google Search Ads',
+        desc: 'Ads targeted to your exact service area, showing up for the searches your customers actually type. Tracked so you know exactly what each lead costs.',
+        href: '/services/paid-ads',
+      },
+      {
+        icon: '📅',
+        name: 'Booking & Enquiry Flow',
+        desc: 'An online booking form or enquiry page that captures the right information and sends instant confirmation — so you spend less time on the phone.',
+        href: '/services/funnels',
+      },
+      {
+        icon: '📧',
+        name: 'Lead Follow-Up System',
+        desc: 'Automated email and SMS sequences that follow up with enquiries who did not book, remind past customers you exist and ask for reviews.',
+        href: '/services/retain-scale',
+      },
+      {
+        icon: '🤖',
+        name: 'AI Search Visibility',
+        desc: 'Get your business showing up when people ask ChatGPT, Perplexity or Google AI for recommendations in your area and category.',
+        href: '/services/ai-search',
+      },
+    ],
+    journey: [
+      {
+        number: '01',
+        title:  'Get a professional website',
+        desc:   'We build it first at no upfront cost. You see a live version before anything changes hands.',
+      },
+      {
+        number: '02',
+        title:  'Show up on Google',
+        desc:   'We set up your Google Business Profile, sort your local SEO and turn on Google Search Ads for your area.',
+      },
+      {
+        number: '03',
+        title:  'Capture every lead',
+        desc:   'A booking or enquiry form that works on mobile, sends you instant notifications and captures all the details you need.',
+      },
+      {
+        number: '04',
+        title:  'Follow up automatically',
+        desc:   'Email and SMS sequences that chase up leads, re-engage past customers and ask happy clients for reviews.',
+      },
+    ],
+    result: {
+      stat:    '3× more enquiries',
+      context: 'in 60 days',
+      quote:   'Before Infinite Weblinks, I was getting maybe two or three enquiries a week from my website. Now it is closer to ten. The Google Ads and the new site made a big difference.',
+      name:    'Mark D.',
+      role:    'Owner · Local Service Business, UK',
     },
   },
 }
