@@ -1,9 +1,21 @@
-import type { Metadata } from 'next'
-import ContactForm from '@/components/sections/ContactForm'
+'use client'
 
-export const metadata: Metadata = {
-  title:       'Get a Free Website — See It Before You Pay | Infinite Weblinks',
-  description: 'We design and build your website first. You preview it live on a real link, request changes, and only pay once you love it. No upfront fee. 100% yours.',
+import Script from 'next/script'
+import ContactForm from '@/components/sections/ContactForm'
+import MeshGradient from '@/components/ui/MeshGradient'
+import GlassCard from '@/components/ui/GlassCard'
+import { trackCTA } from '@/lib/analytics'
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Is the free website really free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. We design and build your website at no cost to you. You pay nothing upfront. After you see the site and decide you want to work with us further, you can add paid services. If you don't continue, you still keep the website." } },
+    { "@type": "Question", "name": "How long does it take to build?", "acceptedAnswer": { "@type": "Answer", "text": "Most websites are ready for review within 5–10 business days. More complex builds take slightly longer." } },
+    { "@type": "Question", "name": "Who owns the website?", "acceptedAnswer": { "@type": "Answer", "text": "You do. The domain, the code and the hosting are 100% yours." } },
+    { "@type": "Question", "name": "Do I have to commit to any ongoing services?", "acceptedAnswer": { "@type": "Answer", "text": "No. The free website comes with no obligation to continue. Many clients do add growth services later, but that is always your choice." } },
+    { "@type": "Question", "name": "What kind of businesses do you build websites for?", "acceptedAnswer": { "@type": "Answer", "text": "Ecommerce brands and Shopify stores, creators and coaches, startups and service businesses. If you have an audience or customers you want to reach online, we can build for you." } }
+  ]
 }
 
 const HOW_IT_WORKS = [
@@ -64,23 +76,25 @@ const FAQ = [
 export default function WebsitePage() {
   return (
     <>
+      <Script
+        id="faq-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
       {/* Hero */}
-      <section
-        className="relative overflow-hidden pt-28 pb-20 px-5 text-center"
-        style={{ background: 'linear-gradient(160deg, #070e1c 0%, #0c1340 55%, #070e1c 100%)' }}
-      >
-        <div className="absolute inset-0 dot-grid-dark pointer-events-none" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60vw] max-w-[640px] aspect-square rounded-full blur-3xl bg-brand/15 pointer-events-none animate-glow-pulse" />
+      <section className="relative overflow-hidden pt-28 pb-20 px-5 text-center bg-surface-soft">
+        <MeshGradient intensity="low" />
 
         <div className="relative max-w-[720px] mx-auto">
-          <div className="inline-flex items-center gap-1.5 bg-brand/20 border border-brand/40 rounded-full px-3.5 py-1.5 text-[11px] font-extrabold tracking-[0.05em] uppercase text-[#82adf5] mb-5">
+          <div className="inline-flex items-center gap-1.5 bg-brand-50 border border-brand-200 rounded-full px-3.5 py-1.5 text-[11px] font-extrabold tracking-[0.05em] uppercase text-brand-700 mb-5">
             The Infinite Weblinks offer
           </div>
-          <h1 className="text-slate-100 text-[clamp(32px,5.5vw,58px)] mb-5">
+          <h1 className="text-slate-900 text-[clamp(32px,5.5vw,58px)] mb-5">
             We build your website first.{' '}
             <span className="gradient-text">You decide after.</span>
           </h1>
-          <p className="text-[#8ba3c0] text-[clamp(16px,2vw,18px)] leading-[1.7] max-w-[540px] mx-auto">
+          <p className="text-slate-500 text-[clamp(16px,2vw,18px)] leading-[1.7] max-w-[540px] mx-auto">
             See your new site live on a real link before anything changes hands.
             Request changes. Only pay once you love it.
           </p>
@@ -130,16 +144,16 @@ export default function WebsitePage() {
           </div>
 
           {/* Form */}
-          <div className="flex-[1_1_340px]">
-            <div className="bg-ink border border-ink-border rounded-3xl p-7 md:p-8">
-              <h3 className="text-[20px] font-extrabold text-slate-100 mb-2">
+          <div className="flex-[1_1_340px]" onClick={() => trackCTA('Request your free website', 'website-form')}>
+            <GlassCard className="p-7 md:p-8">
+              <h3 className="text-[20px] font-extrabold text-ink mb-2">
                 Request your free website
               </h3>
-              <p className="text-sm text-slate-600 mb-6">
+              <p className="text-sm text-slate-500 mb-6">
                 Two minutes to fill in. We&apos;ll come back with a live site.
               </p>
               <ContactForm formType="website" />
-            </div>
+            </GlassCard>
           </div>
         </div>
       </section>
@@ -153,10 +167,10 @@ export default function WebsitePage() {
           </div>
           <div className="space-y-4">
             {FAQ.map((item) => (
-              <div key={item.q} className="bg-snow border border-slate-100 rounded-xl p-6">
+              <GlassCard key={item.q} className="p-6">
                 <h3 className="text-[15px] font-bold text-ink mb-2">{item.q}</h3>
                 <p className="text-[13px] text-slate-500 leading-relaxed">{item.a}</p>
-              </div>
+              </GlassCard>
             ))}
           </div>
         </div>

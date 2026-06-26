@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Button from '@/components/ui/Button'
+import GlassCard from '@/components/ui/GlassCard'
 
 const STEPS = [
   {
@@ -39,7 +40,7 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } 
 
 export default function SocialGrowthSpotlight() {
   return (
-    <section className="bg-white py-[clamp(60px,8vw,96px)] px-5">
+    <section className="bg-surface-soft py-[clamp(60px,8vw,96px)] px-5">
       <div className="max-w-[1080px] mx-auto">
 
         {/* Header */}
@@ -47,7 +48,7 @@ export default function SocialGrowthSpotlight() {
           <div className="inline-flex items-center gap-1.5 bg-violet/[0.07] border border-violet/20 rounded-full px-3.5 py-1.5 text-[11px] font-extrabold tracking-[0.05em] uppercase text-violet mb-5">
             📈 Social Growth
           </div>
-          <h2 className="text-ink mb-4">
+          <h2 className="text-slate-900 mb-4">
             Instagram and YouTube growth that&apos;s actually a strategy,{' '}
             <span className="gradient-text">not a posting schedule</span>
           </h2>
@@ -67,23 +68,21 @@ export default function SocialGrowthSpotlight() {
           variants={stagger}
         >
           {PLATFORMS.map((p) => (
-            <motion.div
-              key={p.name}
-              variants={fadeUp}
-              className="bg-snow border-[1.5px] border-slate-200 rounded-2xl p-7"
-            >
-              <div className="flex items-center gap-3 mb-5">
-                <span className="text-2xl">{p.icon}</span>
-                <h3 className="text-[19px] text-ink">{p.name}</h3>
-              </div>
-              <ul className="space-y-2.5">
-                {p.services.map((svc) => (
-                  <li key={svc} className="flex items-center gap-2.5 text-sm text-slate-500">
-                    <span className="w-1.5 h-1.5 rounded-full bg-violet shrink-0" />
-                    {svc}
-                  </li>
-                ))}
-              </ul>
+            <motion.div key={p.name} variants={fadeUp}>
+              <GlassCard hover className="p-7 h-full">
+                <div className="flex items-center gap-3 mb-5">
+                  <span className="text-2xl text-brand-600">{p.icon}</span>
+                  <h3 className="text-[19px] text-slate-900">{p.name}</h3>
+                </div>
+                <ul className="space-y-2.5">
+                  {p.services.map((svc) => (
+                    <li key={svc} className="flex items-center gap-2.5 text-sm text-slate-500">
+                      <span className="w-1.5 h-1.5 rounded-full bg-brand-600 shrink-0" />
+                      {svc}
+                    </li>
+                  ))}
+                </ul>
+              </GlassCard>
             </motion.div>
           ))}
         </motion.div>
@@ -97,25 +96,24 @@ export default function SocialGrowthSpotlight() {
             {STEPS.map((s, i) => (
               <motion.div
                 key={s.step}
-                className="relative bg-snow border-[1.5px] border-slate-200 rounded-2xl p-5"
+                className="relative"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
                 transition={{ duration: 0.45, delay: i * 0.08, ease: 'easeOut' }}
               >
-                {/* Connector line */}
-                {i < STEPS.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-2 w-4 h-px bg-slate-200 z-10" />
-                )}
-                <div className="text-2xl mb-3">{s.icon}</div>
-                <div
-                  className="text-[10px] font-extrabold tracking-widest uppercase mb-1"
-                  style={{ color: '#5b21b6' }}
-                >
-                  Step {i + 1}
-                </div>
-                <h3 className="text-[15px] text-ink mb-2">{s.step}</h3>
-                <p className="text-[12px] text-slate-500 leading-relaxed">{s.desc}</p>
+                <GlassCard className="p-5 h-full">
+                  {/* Connector line */}
+                  {i < STEPS.length - 1 && (
+                    <div className="hidden lg:block absolute top-1/2 -right-2 w-4 h-px bg-slate-200 z-10" />
+                  )}
+                  <div className="text-2xl mb-3">{s.icon}</div>
+                  <div className="text-[10px] font-extrabold tracking-widest uppercase mb-1 text-brand-600">
+                    Step {i + 1}
+                  </div>
+                  <h3 className="text-[15px] text-slate-900 mb-2">{s.step}</h3>
+                  <p className="text-[12px] text-slate-500 leading-relaxed">{s.desc}</p>
+                </GlassCard>
               </motion.div>
             ))}
           </div>

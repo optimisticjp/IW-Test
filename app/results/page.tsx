@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import Button from '@/components/ui/Button'
 import FinalCTA from '@/components/sections/FinalCTA'
 import { CASE_STUDIES, RESULTS_STATS } from '@/lib/case-studies'
+import MeshGradient from '@/components/ui/MeshGradient'
+import GlassCard from '@/components/ui/GlassCard'
 
 const fadeUp = {
   hidden:  { opacity: 0, y: 24 },
@@ -15,19 +17,15 @@ export default function ResultsPage() {
   return (
     <>
       {/* ── HERO ──────────────────────────────────────────── */}
-      <section
-        className="relative overflow-hidden pt-28 pb-20 px-5 text-center"
-        style={{ background: 'linear-gradient(160deg, #070e1c 0%, #0c1340 55%, #070e1c 100%)' }}
-      >
-        <div className="absolute inset-0 dot-grid-dark pointer-events-none" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60vw] max-w-[640px] aspect-square rounded-full blur-3xl bg-brand/15 pointer-events-none animate-glow-pulse" />
+      <section className="relative overflow-hidden pt-28 pb-20 px-5 text-center bg-surface-soft">
+        <MeshGradient intensity="low" />
 
         <div className="relative max-w-[680px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-1.5 bg-brand/20 border border-brand/40 rounded-full px-3.5 py-1.5 text-[11px] font-extrabold tracking-[0.05em] uppercase text-[#82adf5] mb-5"
+            className="inline-flex items-center gap-1.5 bg-brand-50 border border-brand-200 rounded-full px-3.5 py-1.5 text-[11px] font-extrabold tracking-[0.05em] uppercase text-brand-700 mb-5"
           >
             Real results
           </motion.div>
@@ -36,7 +34,7 @@ export default function ResultsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-slate-100 text-[clamp(32px,5.5vw,58px)] mb-5"
+            className="text-slate-900 text-[clamp(32px,5.5vw,58px)] mb-5"
           >
             Numbers our clients{' '}
             <span className="gradient-text">actually care about</span>
@@ -46,7 +44,7 @@ export default function ResultsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-[#8ba3c0] text-[clamp(16px,2vw,18px)] leading-[1.7] max-w-[500px] mx-auto"
+            className="text-slate-500 text-[clamp(16px,2vw,18px)] leading-[1.7] max-w-[500px] mx-auto"
           >
             Revenue, users and growth — not impressions, reach or vanity metrics.
             Here&apos;s what we&apos;ve actually delivered.
@@ -55,14 +53,14 @@ export default function ResultsPage() {
       </section>
 
       {/* ── STATS STRIP ───────────────────────────────────── */}
-      <div className="bg-ink-mid border-b border-ink-border py-10 px-5">
+      <div className="bg-surface-soft border-b border-slate-200 py-10 px-5">
         <div className="max-w-[1080px] mx-auto flex flex-wrap justify-around gap-6">
           {RESULTS_STATS.map(({ number, label }) => (
             <div key={label} className="text-center px-4">
               <div className="text-[clamp(28px,4.5vw,40px)] font-black tracking-tightest gradient-text">
                 {number}
               </div>
-              <div className="text-xs text-slate-600 mt-1 font-medium max-w-[140px] mx-auto leading-snug">
+              <div className="text-xs text-slate-500 mt-1 font-medium max-w-[140px] mx-auto leading-snug">
                 {label}
               </div>
             </div>
@@ -92,8 +90,8 @@ export default function ResultsPage() {
               <motion.div
                 key={cs.id}
                 variants={fadeUp}
-                className="bg-white border-[1.5px] border-slate-200 rounded-3xl overflow-hidden"
               >
+              <GlassCard className="rounded-3xl overflow-hidden">
                 <div className="flex flex-wrap">
 
                   {/* Result panel */}
@@ -174,10 +172,10 @@ export default function ResultsPage() {
                         className="border-l-2 pl-4 py-1 mt-5"
                         style={{ borderColor: cs.accentColor }}
                       >
-                        <p className="text-sm text-slate-500 italic leading-relaxed mb-2">
+                        <p className="text-sm text-slate-700 italic leading-relaxed mb-2">
                           &ldquo;{cs.quote}&rdquo;
                         </p>
-                        <p className="text-xs font-bold text-slate-400">
+                        <p className="text-xs font-bold text-slate-500">
                           {cs.quoteName} · {cs.quoteRole}
                         </p>
                       </div>
@@ -185,6 +183,7 @@ export default function ResultsPage() {
                   </div>
 
                 </div>
+              </GlassCard>
               </motion.div>
             ))}
           </motion.div>

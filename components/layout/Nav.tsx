@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -9,21 +9,20 @@ import { SITE } from '@/lib/constants'
 import Button from '@/components/ui/Button'
 
 const SERVICES_LINKS = [
-  { label: '🌐 Build',          href: '/services/build'         },
-  { label: '📢 Paid Ads',       href: '/services/paid-ads'      },
-  { label: '📈 Social Growth',  href: '/services/social-growth' },
-  { label: '🤖 AI & Search',    href: '/services/ai-search'     },
-  { label: '🔧 Funnels & CRO',  href: '/services/funnels'       },
-  { label: '📧 Retain & Scale', href: '/services/retain-scale'  },
+  { label: 'Websites & Stores',      href: '/services/build'         },
+  { label: 'Paid Growth',            href: '/services/paid-ads'      },
+  { label: 'Social & Creator Growth', href: '/services/social-growth' },
+  { label: 'SEO & AI Search',        href: '/services/ai-search'     },
+  { label: 'Funnels & Conversion',   href: '/services/funnels'       },
+  { label: 'Email / CRM / Retention', href: '/services/retain-scale' },
 ]
 
 const WHO_LINKS = [
-  { label: '🛒 Ecommerce & Shopify', href: '/for/ecommerce' },
-  { label: '🎨 Creators & Coaches',  href: '/for/creators'  },
-  { label: '🚀 Startups',            href: '/for/startups'  },
+  { label: 'Ecommerce & Shopify', href: '/for/ecommerce' },
+  { label: 'Creators & Coaches',  href: '/for/creators'  },
+  { label: 'Startups',            href: '/for/startups'  },
 ]
 
-// ── Hamburger icon ────────────────────────────────────────────
 function HamburgerIcon({ isOpen }: { isOpen: boolean }) {
   return (
     <div className="relative w-5 h-[14px] flex flex-col justify-between">
@@ -49,7 +48,6 @@ function HamburgerIcon({ isOpen }: { isOpen: boolean }) {
   )
 }
 
-// ── Accordion section for mobile nav ─────────────────────────
 function NavAccordion({
   label,
   links,
@@ -64,16 +62,16 @@ function NavAccordion({
   onLinkClick: () => void
 }) {
   return (
-    <div className="border-b border-ink-border">
+    <div className="border-b border-slate-100">
       <button
         onClick={onToggle}
-        className="flex items-center justify-between w-full py-4 text-sm font-bold text-slate-300 hover:text-white transition-colors"
+        className="flex items-center justify-between w-full py-4 text-sm font-bold text-slate-700 hover:text-brand-600 transition-colors"
       >
         {label}
         <motion.span
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
-          className="text-slate-600 text-xs"
+          className="text-slate-400 text-xs"
         >
           ▼
         </motion.span>
@@ -94,7 +92,7 @@ function NavAccordion({
                   key={link.href}
                   href={link.href}
                   onClick={onLinkClick}
-                  className="block py-2.5 pl-3 text-sm text-slate-500 hover:text-slate-200 transition-colors"
+                  className="block py-2.5 pl-3 text-sm text-slate-500 hover:text-brand-600 transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -107,27 +105,23 @@ function NavAccordion({
   )
 }
 
-// ── Main Nav component ────────────────────────────────────────
 export default function Nav() {
   const pathname                      = usePathname()
   const [scrolled, setScrolled]       = useState(false)
   const [menuOpen, setMenuOpen]       = useState(false)
   const [openSection, setOpenSection] = useState<'services' | 'who' | null>(null)
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMenuOpen(false)
     setOpenSection(null)
   }, [pathname])
 
-  // Scroll detection
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Prevent body scroll when menu open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
@@ -144,23 +138,22 @@ export default function Nav() {
 
   return (
     <>
-      {/* ── Nav bar ── */}
       <nav
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
           scrolled || menuOpen
-            ? 'bg-white/95 backdrop-blur-md border-b border-slate-200/80'
-            : 'bg-snow/60 backdrop-blur-sm border-b border-transparent'
+            ? 'bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm'
+            : 'bg-white/80 backdrop-blur-sm border-b border-brand-100/60'
         )}
       >
         <div className="max-w-[1100px] mx-auto px-5 md:px-10 flex items-center justify-between h-[66px]">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5" onClick={closeMenu}>
-            <div className="w-9 h-9 rounded-[9px] bg-gradient-brand flex items-center justify-center text-white text-lg font-black leading-none select-none">
+          <Link href="/" className="flex items-center gap-2.5 focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 focus-visible:outline-none rounded-lg" onClick={closeMenu}>
+            <div className="w-9 h-9 rounded-[9px] bg-gradient-brand flex items-center justify-center text-white text-lg font-black leading-none select-none shadow-btn">
               ∞
             </div>
-            <span className="text-[15px] font-extrabold text-ink tracking-tighter3 hidden sm:block">
+            <span className="text-[15px] font-extrabold text-slate-900 tracking-tighter3 hidden sm:block">
               {SITE.name}
             </span>
           </Link>
@@ -177,8 +170,8 @@ export default function Nav() {
                 <Link
                   href={link.href}
                   className={cn(
-                    'text-sm font-medium transition-colors duration-150',
-                    pathname === link.href ? 'text-ink font-bold' : 'text-slate-500 hover:text-ink'
+                    'text-sm font-medium transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 focus-visible:outline-none rounded',
+                    pathname === link.href ? 'text-brand-600 font-bold' : 'text-slate-600 hover:text-slate-900'
                   )}
                 >
                   {link.label}
@@ -187,9 +180,8 @@ export default function Nav() {
             ))}
           </ul>
 
-          {/* Right side — desktop CTAs + mobile hamburger */}
+          {/* Right side */}
           <div className="flex items-center gap-2">
-            {/* Desktop CTA buttons */}
             <div className="hidden sm:flex items-center gap-2">
               <Button href="/website" variant="outline" size="sm">
                 Free Website
@@ -199,13 +191,12 @@ export default function Nav() {
               </Button>
             </div>
 
-            {/* Mobile: show just primary CTA + hamburger */}
             <Button href="/website" variant="outline" size="sm" className="sm:hidden text-xs px-3 py-2">
               Free Site
             </Button>
             <button
               onClick={() => setMenuOpen((o) => !o)}
-              className="lg:hidden ml-1 p-2 text-ink hover:text-brand transition-colors"
+              className="lg:hidden ml-1 p-2 text-slate-700 hover:text-brand-600 transition-colors focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 focus-visible:outline-none rounded"
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={menuOpen}
             >
@@ -216,11 +207,10 @@ export default function Nav() {
         </div>
       </nav>
 
-      {/* ── Mobile menu overlay ── */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {menuOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -230,17 +220,15 @@ export default function Nav() {
               onClick={closeMenu}
             />
 
-            {/* Slide-down panel */}
             <motion.div
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.22, ease: 'easeOut' }}
-              className="fixed top-[66px] left-0 right-0 z-40 bg-ink border-b border-ink-border shadow-2xl lg:hidden max-h-[calc(100vh-66px)] overflow-y-auto"
+              className="fixed top-[66px] left-0 right-0 z-40 bg-white border-b border-slate-200 shadow-2xl lg:hidden max-h-[calc(100vh-66px)] overflow-y-auto"
             >
               <div className="max-w-[480px] mx-auto px-5 py-4 pb-8">
 
-                {/* Services accordion */}
                 <NavAccordion
                   label="Services"
                   links={SERVICES_LINKS}
@@ -249,7 +237,6 @@ export default function Nav() {
                   onLinkClick={closeMenu}
                 />
 
-                {/* Who We Help accordion */}
                 <NavAccordion
                   label="Who We Help"
                   links={WHO_LINKS}
@@ -258,23 +245,21 @@ export default function Nav() {
                   onLinkClick={closeMenu}
                 />
 
-                {/* Direct links */}
                 {[
-                  { label: 'Results',     href: '/results' },
-                  { label: 'About',       href: '/about'   },
+                  { label: 'Results', href: '/results' },
+                  { label: 'About',   href: '/about'   },
                 ].map((link) => (
-                  <div key={link.href} className="border-b border-ink-border">
+                  <div key={link.href} className="border-b border-slate-100">
                     <Link
                       href={link.href}
                       onClick={closeMenu}
-                      className="block py-4 text-sm font-bold text-slate-300 hover:text-white transition-colors"
+                      className="block py-4 text-sm font-bold text-slate-700 hover:text-brand-600 transition-colors"
                     >
                       {link.label}
                     </Link>
                   </div>
                 ))}
 
-                {/* CTA buttons */}
                 <div className="mt-6 space-y-3">
                   <Button
                     href="/website"

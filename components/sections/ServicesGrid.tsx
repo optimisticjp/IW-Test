@@ -3,7 +3,7 @@ import { PILLARS } from '@/lib/constants'
 
 export default function ServicesGrid() {
   return (
-    <section className="bg-white border-t border-slate-100 py-[clamp(60px,8vw,96px)] px-5">
+    <section className="bg-surface-soft border-t border-slate-100 py-[clamp(60px,8vw,96px)] px-5">
       <div className="max-w-[1080px] mx-auto">
 
         {/* Header */}
@@ -11,7 +11,7 @@ export default function ServicesGrid() {
           <p className="text-xs font-extrabold tracking-widest uppercase text-slate-400 mb-3">
             The full picture
           </p>
-          <h2 className="text-ink">Everything we do</h2>
+          <h2 className="text-slate-900">Everything we do</h2>
           <p className="text-slate-500 text-sm mt-3 max-w-[400px] mx-auto">
             75+ services across 6 growth pillars. All delivered in-house.
           </p>
@@ -28,7 +28,7 @@ export default function ServicesGrid() {
                 className="group flex items-center gap-2 mb-4 hover:opacity-80 transition-opacity"
               >
                 <span className="text-lg">{pillar.icon}</span>
-                <span className="text-sm font-extrabold text-ink group-hover:text-brand transition-colors">
+                <span className="text-sm font-extrabold text-slate-900 group-hover:text-brand transition-colors">
                   {pillar.title}
                 </span>
                 <span className="text-xs text-slate-400 ml-auto hidden sm:block">→</span>

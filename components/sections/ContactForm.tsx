@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, FormEvent } from 'react'
+import { useState, FormEvent, useRef } from 'react'
 import { SITE } from '@/lib/constants'
+import { trackFormStart, trackFormSubmit } from '@/lib/analytics'
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 
@@ -10,7 +11,15 @@ interface ContactFormProps {
 }
 
 export default function ContactForm({ formType = 'contact' }: ContactFormProps) {
-  const [status, setStatus] = useState<Status>('idle')
+  const [status, setStatus]     = useState<Status>('idle')
+  const startedRef              = useRef(false)
+
+  function handleFirstInteraction() {
+    if (!startedRef.current) {
+      startedRef.current = true
+      trackFormStart()
+    }
+  }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -28,6 +37,7 @@ export default function ContactForm({ formType = 'contact' }: ContactFormProps) 
 
       if (res.ok) {
         setStatus('success')
+        trackFormSubmit(formType)
         form.reset()
       } else {
         setStatus('error')
@@ -40,81 +50,91 @@ export default function ContactForm({ formType = 'contact' }: ContactFormProps) 
   if (status === 'success') {
     return (
       <div className="text-center py-12 px-6">
-        <div className="w-14 h-14 rounded-full bg-green-500/15 flex items-center justify-center mx-auto mb-5">
-          <span className="text-green-400 text-2xl">✓</span>
+        <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-5">
+          <span className="text-green-600 text-2xl">✓</span>
         </div>
-        <h3 className="text-xl font-bold text-slate-100 mb-3">
+        <h3 className="text-xl font-bold text-slate-900 mb-3">
           {formType === 'website' ? 'Request received!' : 'Message sent!'}
         </h3>
         <p className="text-slate-500 text-sm leading-relaxed">
           {formType === 'website'
-            ? 'We\'ll start building your site and send you a live preview link within 3–5 business days.'
-            : 'We usually respond within one business day. Check your inbox — or your spam just in case.'}
+            ? "We'll start building your site and send you a live preview link within 3–5 business days."
+            : "We usually respond within one business day. Check your inbox — or your spam just in case."}
         </p>
       </div>
     )
   }
 
-  return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+  const inputClass = 'w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:ring-offset-0 focus:border-brand-600 transition-colors min-h-[44px]'
+  const labelClass = 'block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wider'
 
-      {/* Hidden field to identify form type in Formspree inbox */}
+  return (
+    <form onSubmit={handleSubmit} onFocus={handleFirstInteraction} className="space-y-4">
       <input type="hidden" name="_form_type" value={formType} />
 
       {/* Name */}
       <div>
-        <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">
-          Your name <span className="text-brand">*</span>
+        <label htmlFor="cf-name" className={labelClass}>
+          Your name <span className="text-brand-600" aria-hidden="true">*</span>
         </label>
         <input
+          id="cf-name"
           type="text"
           name="name"
           required
+          autoComplete="name"
           placeholder="Jane Smith"
-          className="w-full bg-ink-card border border-ink-border rounded-xl px-4 py-3 text-sm text-slate-200 placeholder:text-slate-700 focus:outline-none focus:border-brand/60 transition-colors"
+          className={inputClass}
         />
       </div>
 
       {/* Email */}
       <div>
-        <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">
-          Email address <span className="text-brand">*</span>
+        <label htmlFor="cf-email" className={labelClass}>
+          Email address <span className="text-brand-600" aria-hidden="true">*</span>
         </label>
         <input
+          id="cf-email"
           type="email"
           name="email"
           required
+          autoComplete="email"
           placeholder="jane@yourbusiness.com"
-          className="w-full bg-ink-card border border-ink-border rounded-xl px-4 py-3 text-sm text-slate-200 placeholder:text-slate-700 focus:outline-none focus:border-brand/60 transition-colors"
+          className={inputClass}
         />
       </div>
 
-      {/* WhatsApp (optional) */}
+      {/* WhatsApp — required */}
       <div>
-        <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">
-          WhatsApp number <span className="text-slate-700">(optional — include country code)</span>
+        <label htmlFor="cf-whatsapp" className={labelClass}>
+          WhatsApp number <span className="text-brand-600" aria-hidden="true">*</span>
+          <span className="text-slate-400 font-normal normal-case tracking-normal ml-1">(include country code)</span>
         </label>
         <input
+          id="cf-whatsapp"
           type="tel"
           name="whatsapp"
+          required
+          autoComplete="tel"
           placeholder="+44 7700 000000"
-          className="w-full bg-ink-card border border-ink-border rounded-xl px-4 py-3 text-sm text-slate-200 placeholder:text-slate-700 focus:outline-none focus:border-brand/60 transition-colors"
+          className={inputClass}
         />
       </div>
 
-      {/* Business type — shown for website requests */}
+      {/* Business type — website requests only */}
       {formType === 'website' && (
         <div>
-          <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">
-            What best describes your business? <span className="text-brand">*</span>
+          <label htmlFor="cf-business-type" className={labelClass}>
+            What best describes your business? <span className="text-brand-600" aria-hidden="true">*</span>
           </label>
           <select
+            id="cf-business-type"
             name="business_type"
             required
             defaultValue=""
-            className="w-full bg-ink-card border border-ink-border rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-brand/60 transition-colors appearance-none"
+            className={inputClass}
           >
-            <option value="" disabled className="text-slate-700">Select one</option>
+            <option value="" disabled>Select one</option>
             <option value="ecommerce">Ecommerce / Shopify store</option>
             <option value="creator">Creator, coach or personal brand</option>
             <option value="startup">Startup or new business</option>
@@ -126,51 +146,53 @@ export default function ContactForm({ formType = 'contact' }: ContactFormProps) 
 
       {/* Current website */}
       <div>
-        <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">
-          Current website URL <span className="text-slate-700">(if you have one)</span>
+        <label htmlFor="cf-website" className={labelClass}>
+          Current website URL
+          <span className="text-slate-400 font-normal normal-case tracking-normal ml-1">(if you have one)</span>
         </label>
         <input
+          id="cf-website"
           type="url"
           name="current_website"
+          autoComplete="url"
           placeholder="https://yoursite.com"
-          className="w-full bg-ink-card border border-ink-border rounded-xl px-4 py-3 text-sm text-slate-200 placeholder:text-slate-700 focus:outline-none focus:border-brand/60 transition-colors"
+          className={inputClass}
         />
       </div>
 
       {/* Message / Brief */}
       <div>
-        <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">
+        <label htmlFor="cf-message" className={labelClass}>
           {formType === 'website'
             ? 'Tell us about your business and what you want the site to do'
             : 'What do you want to work on?'}{' '}
-          <span className="text-brand">*</span>
+          <span className="text-brand-600" aria-hidden="true">*</span>
         </label>
         <textarea
+          id="cf-message"
           name="message"
           required
           rows={4}
           placeholder={
             formType === 'website'
-              ? 'e.g. We sell skincare products. We want a Shopify redesign that improves our conversion rate. Current site is slow and doesn\'t convert mobile traffic well.'
-              : 'Tell us what you\'re working on, what\'s not working, and what you\'d like help with.'
+              ? "e.g. We sell skincare products. We want a Shopify redesign that improves our conversion rate."
+              : "Tell us what you're working on, what's not working, and what you'd like help with."
           }
-          className="w-full bg-ink-card border border-ink-border rounded-xl px-4 py-3 text-sm text-slate-200 placeholder:text-slate-700 focus:outline-none focus:border-brand/60 transition-colors resize-none"
+          className={`${inputClass} resize-none`}
         />
       </div>
 
-      {/* Error message */}
       {status === 'error' && (
-        <p className="text-red-400 text-xs">
-          Something went wrong. Try emailing us directly at{' '}
+        <p className="text-red-600 text-xs" role="alert">
+          Something went wrong. Please try emailing us at{' '}
           <a href={`mailto:${SITE.email}`} className="underline">{SITE.email}</a>
         </p>
       )}
 
-      {/* Submit */}
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="w-full bg-gradient-brand text-white font-bold py-4 rounded-xl text-sm shadow-btn hover:shadow-btn-lg hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none"
+        className="w-full bg-gradient-brand text-white font-bold py-4 rounded-xl text-sm shadow-btn hover:shadow-btn-lg hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 focus-visible:outline-none min-h-[44px]"
       >
         {status === 'submitting'
           ? 'Sending...'
@@ -179,7 +201,7 @@ export default function ContactForm({ formType = 'contact' }: ContactFormProps) 
             : 'Send message →'}
       </button>
 
-      <p className="text-xs text-slate-700 text-center">
+      <p className="text-xs text-slate-400 text-center">
         No spam. We respond within one business day.
       </p>
     </form>

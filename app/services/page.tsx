@@ -1,9 +1,9 @@
 'use client'
 
-import type { Metadata } from 'next'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Button from '@/components/ui/Button'
+import MeshGradient from '@/components/ui/MeshGradient'
 import FinalCTA from '@/components/sections/FinalCTA'
 import { PILLARS } from '@/lib/constants'
 
@@ -23,19 +23,16 @@ export default function ServicesPage() {
   return (
     <>
       {/* Hero */}
-      <section
-        className="relative overflow-hidden pt-28 pb-20 px-5 text-center"
-        style={{ background: 'linear-gradient(160deg, #070e1c 0%, #0c1340 55%, #070e1c 100%)' }}
-      >
-        <div className="absolute inset-0 dot-grid-dark pointer-events-none" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60vw] max-w-[640px] aspect-square rounded-full blur-3xl bg-brand/15 pointer-events-none animate-glow-pulse" />
+      <section className="relative overflow-hidden pt-28 pb-20 px-5 text-center bg-surface-soft">
+        <MeshGradient intensity="low" />
+        <div className="absolute inset-0 dot-grid pointer-events-none opacity-40" />
 
         <div className="relative max-w-[720px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-1.5 bg-brand/20 border border-brand/40 rounded-full px-3.5 py-1.5 text-[11px] font-extrabold tracking-[0.05em] uppercase text-[#82adf5] mb-5"
+            className="inline-flex items-center gap-1.5 bg-brand-50 border border-brand-200 rounded-full px-3.5 py-1.5 text-[11px] font-extrabold tracking-[0.05em] uppercase text-brand-700 mb-5"
           >
             Everything we do
           </motion.div>
@@ -44,7 +41,7 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-slate-100 text-[clamp(32px,5.5vw,58px)] mb-5"
+            className="text-slate-900 text-[clamp(32px,5.5vw,58px)] mb-5"
           >
             One team for your website and{' '}
             <span className="gradient-text">everything that grows it</span>
@@ -54,7 +51,7 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-[#8ba3c0] text-[clamp(16px,2vw,18px)] leading-[1.7] max-w-[520px] mx-auto mb-10"
+            className="text-slate-500 text-[clamp(16px,2vw,18px)] leading-[1.7] max-w-[520px] mx-auto mb-10"
           >
             Start with what you need. Add more when you&apos;re ready. Every service
             is delivered by our in-house team — no outsourcing, no handoffs.
@@ -67,7 +64,7 @@ export default function ServicesPage() {
             className="flex gap-3 justify-center flex-wrap"
           >
             <Button href="/contact" size="lg">Get started →</Button>
-            <Button href="/website" variant="ghost" size="lg">Start with a free website</Button>
+            <Button href="/website" variant="outline" size="lg">Start with a free website</Button>
           </motion.div>
         </div>
       </section>
@@ -92,7 +89,7 @@ export default function ServicesPage() {
                   <div className="text-3xl mb-4">{p.icon}</div>
 
                   {/* Title */}
-                  <h2 className="text-[22px] text-ink mb-3 group-hover:text-brand transition-colors">
+                  <h2 className="text-[22px] text-slate-900 mb-3 group-hover:text-brand-600 transition-colors">
                     {p.title}
                   </h2>
 
@@ -125,12 +122,12 @@ export default function ServicesPage() {
       </section>
 
       {/* Free website callout */}
-      <section className="bg-snow py-16 px-5">
+      <section className="bg-surface-soft py-16 px-5">
         <div className="max-w-[680px] mx-auto text-center">
           <p className="text-[11px] font-extrabold tracking-widest uppercase text-slate-400 mb-4">
             Not sure where to start?
           </p>
-          <h2 className="text-[clamp(24px,4vw,38px)] text-ink mb-4">
+          <h2 className="text-[clamp(24px,4vw,38px)] text-slate-900 mb-4">
             We build your website first — free.
           </h2>
           <p className="text-slate-500 text-base leading-relaxed mb-8">

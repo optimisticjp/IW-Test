@@ -12,6 +12,7 @@ import ResultsHighlights      from '@/components/sections/ResultsHighlights'
 import Testimonials           from '@/components/sections/Testimonials'
 import ServicesGrid           from '@/components/sections/ServicesGrid'
 import FinalCTA               from '@/components/sections/FinalCTA'
+import ArcDivider             from '@/components/ui/ArcDivider'
 
 export const metadata: Metadata = {
   title:       'Infinite Weblinks — Growth Agency for Ecommerce, Creators & Startups',
@@ -21,40 +22,54 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      {/* 1. Hero */}
+      {/* 1. Hero — bg-surface-soft */}
       <Hero />
 
-      {/* 2. Social Proof Strip */}
+      {/* surface-soft → white */}
+      <ArcDivider fill="white" className="bg-surface-soft" />
+
+      {/* 2. Social Proof Strip — bg-white */}
       <ProofStrip />
 
-      {/* 3. Who We Help */}
+      {/* white → surface-soft */}
+      <ArcDivider fill="#f0f4f8" className="bg-white" />
+
+      {/* 3. Who We Help — bg-surface-soft */}
       <WhoWeHelp />
 
-      {/* 4. Six Growth Pillars */}
+      {/* surface-soft → surface-soft (no divider — Pillars also uses surface-soft) */}
+
+      {/* 4. Six Growth Pillars — bg-surface-soft */}
       <Pillars />
 
-      {/* 5. Free Website Feature (dark) */}
+      {/* 5. Free Website Feature — brand gradient (its own section, no extra divider needed) */}
       <FreeWebsite />
 
-      {/* 6. AI Search Edge (dark) */}
+      {/* 6. AI Search Edge — bg-surface-soft */}
       <AISearch />
 
-      {/* 7. Social Growth Spotlight */}
+      {/* 7. Social Growth Spotlight — bg-surface-soft */}
       <SocialGrowthSpotlight />
 
-      {/* Stats strip */}
+      {/* surface-soft → white */}
+      <ArcDivider fill="white" className="bg-surface-soft" />
+
+      {/* Stats strip — bg-white */}
       <StatsStrip />
 
-      {/* 8. Results Highlights */}
+      {/* 8. Results Highlights — bg-white */}
       <ResultsHighlights />
 
-      {/* 9. Testimonials */}
+      {/* white → surface-soft */}
+      <ArcDivider fill="#f0f4f8" className="bg-white" />
+
+      {/* 9. Testimonials — bg-surface-soft */}
       <Testimonials />
 
-      {/* 10. Full Services Grid */}
+      {/* 10. Full Services Grid — bg-surface-soft */}
       <ServicesGrid />
 
-      {/* 11. Final CTA */}
+      {/* 11. Final CTA — bg-surface-soft */}
       <FinalCTA />
     </>
   )

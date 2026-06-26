@@ -15,7 +15,7 @@ const card = {
 
 export default function WhoWeHelp() {
   return (
-    <section className="bg-snow py-[clamp(60px,8vw,96px)] px-5">
+    <section className="bg-surface-soft py-[clamp(60px,8vw,96px)] px-5">
       <div className="max-w-[1080px] mx-auto">
 
         {/* Header */}
@@ -23,7 +23,7 @@ export default function WhoWeHelp() {
           <div className="inline-flex items-center gap-1.5 bg-brand/[0.07] border border-brand/20 rounded-full px-3.5 py-1.5 text-[11px] font-extrabold tracking-[0.05em] uppercase text-brand mb-5">
             Who we work with
           </div>
-          <h2 className="text-ink">One agency. Three kinds of growth.</h2>
+          <h2 className="text-slate-900">One agency. Three kinds of growth.</h2>
         </div>
 
         {/* Cards */}
@@ -38,7 +38,7 @@ export default function WhoWeHelp() {
             <motion.div
               key={a.label}
               variants={card}
-              className="bg-white border-[1.5px] border-slate-200 rounded-2xl p-7 hover:shadow-card hover:-translate-y-0.5 transition-all duration-200"
+              className="bg-white/75 backdrop-blur-xl border border-white/80 shadow-glass rounded-2xl p-7 hover:-translate-y-0.5 transition-all duration-200"
             >
               {/* Accent bar */}
               <div
@@ -55,7 +55,7 @@ export default function WhoWeHelp() {
               </p>
 
               {/* Title */}
-              <h3 className="text-[clamp(17px,2.5vw,20px)] text-ink mb-3">{a.title}</h3>
+              <h3 className="text-[clamp(17px,2.5vw,20px)] text-slate-900 mb-3">{a.title}</h3>
 
               {/* Description */}
               <p className="text-sm text-slate-500 leading-relaxed mb-5">{a.desc}</p>
