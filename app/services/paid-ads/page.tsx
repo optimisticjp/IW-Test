@@ -7,6 +7,7 @@ const data = SERVICE_PAGES['paid-ads']
 export const metadata: Metadata = {
   title:       data.seoTitle,
   description: data.seoDesc,
+  alternates:  { canonical: 'https://infiniteweblinks.com/services/paid-ads' },
 }
 
 export default function PaidAdsPage() {

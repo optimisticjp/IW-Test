@@ -7,6 +7,7 @@ const data = SERVICE_PAGES.build
 export const metadata: Metadata = {
   title:       data.seoTitle,
   description: data.seoDesc,
+  alternates:  { canonical: 'https://infiniteweblinks.com/services/build' },
 }
 
 export default function BuildPage() {

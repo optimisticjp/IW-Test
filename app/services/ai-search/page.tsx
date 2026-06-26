@@ -7,6 +7,7 @@ const data = SERVICE_PAGES['ai-search']
 export const metadata: Metadata = {
   title:       data.seoTitle,
   description: data.seoDesc,
+  alternates:  { canonical: 'https://infiniteweblinks.com/services/ai-search' },
 }
 
 export default function AISearchPage() {

@@ -7,6 +7,7 @@ const data = SERVICE_PAGES.funnels
 export const metadata: Metadata = {
   title:       data.seoTitle,
   description: data.seoDesc,
+  alternates:  { canonical: 'https://infiniteweblinks.com/services/funnels' },
 }
 
 export default function FunnelsPage() {
