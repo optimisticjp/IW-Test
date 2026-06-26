@@ -39,7 +39,7 @@
 @layer utilities {
   /* Gradient text */
   .gradient-text {
-    background: linear-gradient(135deg, #075aaa 0%, #4f46e5 100%);
+    background: linear-gradient(135deg, #075aaa 0%, #4F8EF7 40%, #6366F1 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -61,6 +61,15 @@
   .dot-grid-dark {
     background-image: radial-gradient(rgba(7, 90, 170, 0.07) 1px, transparent 1px);
     background-size: 28px 28px;
+  }
+
+  /* Blob background elements */
+  .blob {
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    user-select: none;
+    position: absolute;
   }
 
   /* Animation delay helpers */
