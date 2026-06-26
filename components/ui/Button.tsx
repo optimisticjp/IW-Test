@@ -17,8 +17,8 @@ interface ButtonProps {
 }
 
 const variantClasses: Record<Variant, string> = {
-  primary:   'bg-gradient-brand text-white shadow-btn hover:shadow-btn-lg hover:-translate-y-0.5 transition-all duration-200',
-  secondary: 'bg-brand-50 text-brand-700 border-[1.5px] border-brand-200 hover:bg-brand-100 hover:border-brand-300 transition-all duration-200',
+  primary:   'bg-gradient-brand text-white shadow-btn hover:shadow-btn-lg hover:scale-[1.02] active:scale-[0.99] transition-all duration-200',
+  secondary: 'bg-white text-brand-600 border-[1.5px] border-brand-200 hover:bg-brand-50 hover:border-brand-300 transition-all duration-200',
   outline:   'bg-transparent text-slate-700 border-[1.5px] border-slate-300 hover:border-brand-500 hover:text-brand-600 hover:bg-brand-50/50 transition-all duration-200',
   ghost:     'bg-white/10 text-slate-100 border-[1.5px] border-white/20 hover:bg-white/20 transition-all duration-200',
 }
@@ -53,11 +53,11 @@ export default function Button({
 
   if (href) {
     return external ? (
-      <a href={href} target="_blank" rel="noopener noreferrer" className={classes}>
+      <a href={href} target="_blank" rel="noopener noreferrer" className={classes} onClick={onClick}>
         {children}
       </a>
     ) : (
-      <Link href={href} className={classes}>
+      <Link href={href} className={classes} onClick={onClick}>
         {children}
       </Link>
     )
