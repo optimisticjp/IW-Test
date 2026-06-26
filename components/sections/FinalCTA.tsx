@@ -1,63 +1,44 @@
-'use client'
-
-import { motion } from 'framer-motion'
-import Button from '@/components/ui/Button'
-import { trackCTA } from '@/lib/analytics'
+import Link from 'next/link'
+import { ArrowRightIcon } from '@/components/ui/Icons'
 
 export default function FinalCTA() {
   return (
-    <section className="relative overflow-hidden bg-brand-900 py-[clamp(80px,10vw,120px)] px-5 text-center min-h-[60vh] flex items-center">
+    <section className="relative overflow-hidden bg-brand-950 section-pad min-h-[70vh] flex items-center">
 
       {/* Blobs */}
-      <div
-        className="blob bg-brand-700 w-[500px] h-[500px] opacity-40 animate-gradient-move"
-        style={{ top: '-20%', left: '-10%' }}
-      />
-      <div
-        className="blob bg-accent w-[350px] h-[350px] opacity-20 animate-gradient-move"
-        style={{ bottom: '-10%', right: '-5%', animationDelay: '5s', animationDirection: 'alternate-reverse' }}
-      />
+      <div aria-hidden="true">
+        <div className="blob animate-blob absolute w-[600px] h-[600px] -top-32 -left-32 bg-brand-800/50" />
+        <div className="blob animate-blob-delayed absolute w-[500px] h-[500px] -bottom-24 -right-16 bg-accent/15" />
+      </div>
 
-      {/* Content */}
-      <motion.div
-        className="relative max-w-[620px] mx-auto"
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-80px' }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-      >
-        <div className="inline-flex items-center gap-1.5 border border-white/20 bg-white/10 rounded-full px-3.5 py-1.5 text-[11px] font-extrabold tracking-[0.05em] uppercase text-white/80 mb-5">
-          Ready when you are
+      <div className="relative z-10 text-center max-w-3xl mx-auto px-4 w-full">
+        <div className="inline-flex rounded-full border border-white/20 bg-white/10 px-5 py-2 mb-8 text-sm font-medium text-white/70">
+          The easiest first step you'll take today
         </div>
 
-        <h2 className="text-white mb-5 text-[clamp(28px,5vw,46px)]">
-          Start with a free website.{' '}
-          <span className="opacity-70">Grow it from there.</span>
+        <h2 className="font-display font-extrabold tracking-tight text-white mb-6 text-5xl lg:text-6xl leading-[1.05]">
+          Ready to grow your business?
+          <span className="block text-4xl text-white/60 mt-2 font-bold">
+            Let&apos;s start with your website.
+          </span>
         </h2>
 
-        <p className="text-brand-200 text-[17px] leading-[1.7] max-w-[460px] mx-auto mb-11">
-          Not sure where to start? We&apos;ll tell you honestly what your business needs first.
+        <p className="font-sans text-white/50 text-lg mb-10 max-w-xl mx-auto">
+          Fill in a 2-minute brief. We design, build and launch your website.
+          Then we grow it together.
         </p>
 
-        <div className="flex gap-3 justify-center flex-col sm:flex-row">
-          <Button
-            href="/website"
-            size="lg"
-            className="bg-white text-brand-700 hover:bg-brand-50 shadow-none hover:shadow-none border-0"
-            onClick={() => trackCTA('Get your free website', 'final-cta')}
-          >
-            Get my free website →
-          </Button>
-          <Button
-            href="/contact"
-            variant="ghost"
-            size="lg"
-            onClick={() => trackCTA('Book a growth call', 'final-cta')}
-          >
-            Book a growth call
-          </Button>
-        </div>
-      </motion.div>
+        <Link
+          href="/website"
+          className="inline-flex items-center gap-2 bg-white text-brand-700 font-bold text-lg px-10 py-4 rounded-xl hover:bg-brand-50 shadow-[0_4px_32px_rgba(255,255,255,0.12)] hover:shadow-[0_8px_48px_rgba(255,255,255,0.18)] transition-all duration-200"
+        >
+          Get my free website <ArrowRightIcon size={18} />
+        </Link>
+
+        <p className="text-white/30 text-sm mt-6">
+          Trusted by businesses in 12+ countries · No upfront cost
+        </p>
+      </div>
 
     </section>
   )

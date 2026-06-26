@@ -1,63 +1,37 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
+import CountUp from '@/components/ui/CountUp'
 
 const STATS = [
-  { number: 12,  suffix: '+', label: 'Countries served'       },
-  { number: 98,  suffix: '%', label: 'Client retention rate'  },
-  { number: 3,   suffix: '×', label: 'Average traffic growth' },
-  { number: 0,   prefix: '£', label: 'Upfront to start'       },
+  { end: 12, suffix: '+', label: 'Countries we serve' },
+  { end: 98, suffix: '%', label: 'Client retention rate' },
+  { end: 3,  suffix: '×', label: 'Average traffic growth' },
+  { static: '£0',         label: 'Upfront cost to start' },
 ]
-
-function CountUp({ target, prefix = '', suffix = '' }: { target: number; prefix?: string; suffix?: string }) {
-  const [value, setValue]   = useState(0)
-  const ref                 = useRef<HTMLSpanElement>(null)
-  const hasRun              = useRef(false)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting || hasRun.current) return
-        hasRun.current = true
-        const duration = 1800
-        const start    = performance.now()
-        const animate  = (now: number) => {
-          const elapsed  = now - start
-          const progress = Math.min(elapsed / duration, 1)
-          const eased    = 1 - Math.pow(1 - progress, 3)
-          setValue(Math.round(eased * target))
-          if (progress < 1) requestAnimationFrame(animate)
-        }
-        requestAnimationFrame(animate)
-      },
-      { threshold: 0.5 }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [target])
-
-  return (
-    <span ref={ref}>
-      {prefix}{value}{suffix}
-    </span>
-  )
-}
 
 export default function StatsStrip() {
   return (
-    <section className="bg-brand-600 py-[clamp(48px,7vw,72px)] px-5">
-      <div className="max-w-[1080px] mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
-        {STATS.map(({ number, prefix, suffix, label }) => (
-          <div key={label} className="text-center">
-            <div className="font-display text-white font-black tracking-tightest text-[clamp(36px,5vw,56px)] leading-none mb-2">
-              <CountUp target={number} prefix={prefix} suffix={suffix} />
-            </div>
-            <div className="text-brand-200 text-sm font-medium">{label}</div>
-          </div>
-        ))}
+    <section className="bg-brand-900 text-white section-pad">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+          {STATS.map(({ end, suffix, static: staticVal, label }, i) => (
+            <motion.div
+              key={label}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="font-display font-extrabold text-6xl lg:text-7xl text-white leading-none tracking-[-0.04em]">
+                {staticVal ? staticVal : <CountUp end={end!} suffix={suffix} />}
+              </div>
+              <p className="font-sans text-sm font-medium uppercase tracking-widest text-brand-300 mt-3">
+                {label}
+              </p>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   )
