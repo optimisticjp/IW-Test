@@ -56,7 +56,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       'They rebuilt our Shopify store and we went from £8k to £34k a month in 90 days. Their Meta ads team actually knows what they\'re doing.',
     quoteName:   'Sarah M.',
     quoteRole:   'Founder · D2C Brand, UK',
-    accentColor: '#0a5bc4',
+    accentColor: '#075aaa',
   },
   {
     id:            'us-coach-course-launch',

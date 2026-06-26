@@ -49,7 +49,7 @@ export const AUDIENCE_PAGES: Record<string, AudiencePageData> = {
     label:       'Ecommerce & Shopify',
     title:       'More traffic. More conversions. More repeat buyers.',
     subtitle:    'We build Shopify stores that convert, run the paid ads that fill them, and set up the email and retention systems that turn one-time buyers into customers for life.',
-    accentColor: '#0a5bc4',
+    accentColor: '#075aaa',
     seoTitle:    'Ecommerce & Shopify Growth Agency — Ads, Email, SEO & Store Builds',
     seoDesc:     'Full-stack ecommerce growth for D2C and Shopify brands. Store builds, Google and Meta ads, Klaviyo email, ecommerce SEO, CRO and loyalty programs. US, UK, Australia and beyond.',
     painPoints: [

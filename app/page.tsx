@@ -1,18 +1,14 @@
 import type { Metadata } from 'next'
 
-import Hero                  from '@/components/sections/Hero'
-import ProofStrip             from '@/components/sections/ProofStrip'
-import WhoWeHelp              from '@/components/sections/WhoWeHelp'
-import Pillars                from '@/components/sections/Pillars'
-import FreeWebsite            from '@/components/sections/FreeWebsite'
-import AISearch               from '@/components/sections/AISearch'
-import SocialGrowthSpotlight  from '@/components/sections/SocialGrowthSpotlight'
-import StatsStrip             from '@/components/sections/StatsStrip'
-import ResultsHighlights      from '@/components/sections/ResultsHighlights'
-import Testimonials           from '@/components/sections/Testimonials'
-import ServicesGrid           from '@/components/sections/ServicesGrid'
-import FinalCTA               from '@/components/sections/FinalCTA'
-import ArcDivider             from '@/components/ui/ArcDivider'
+import Hero        from '@/components/sections/Hero'
+import ProofStrip  from '@/components/sections/ProofStrip'
+import WhoWeHelp   from '@/components/sections/WhoWeHelp'
+import Pillars     from '@/components/sections/Pillars'
+import FreeWebsite from '@/components/sections/FreeWebsite'
+import StatsStrip  from '@/components/sections/StatsStrip'
+import Testimonials from '@/components/sections/Testimonials'
+import FinalCTA    from '@/components/sections/FinalCTA'
+import ArcDivider  from '@/components/ui/ArcDivider'
 
 export const metadata: Metadata = {
   title:       'Infinite Weblinks — Growth Agency for Ecommerce, Creators & Startups',
@@ -22,54 +18,40 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      {/* 1. Hero — bg-surface-soft */}
+      {/* 1. Hero — bg-white */}
       <Hero />
 
-      {/* surface-soft → white */}
-      <ArcDivider fill="white" className="bg-surface-soft" />
-
-      {/* 2. Social Proof Strip — bg-white */}
+      {/* 2. Proof Strip — bg-white (seamless with hero) */}
       <ProofStrip />
 
       {/* white → surface-soft */}
-      <ArcDivider fill="#f0f4f8" className="bg-white" />
+      <ArcDivider fill="#F8FAFF" className="bg-white" />
 
       {/* 3. Who We Help — bg-surface-soft */}
       <WhoWeHelp />
 
-      {/* surface-soft → surface-soft (no divider — Pillars also uses surface-soft) */}
-
-      {/* 4. Six Growth Pillars — bg-surface-soft */}
+      {/* 4. Pillars — bg-surface-soft (same, no divider) */}
       <Pillars />
 
-      {/* 5. Free Website Feature — brand gradient (its own section, no extra divider needed) */}
+      {/* surface-soft → brand gradient (FreeWebsite is brand-600→brand-800) */}
+      <ArcDivider fill="#075aaa" className="bg-surface-soft" />
+
+      {/* 5. Free Website — bg-gradient brand-600→brand-800 */}
       <FreeWebsite />
 
-      {/* 6. AI Search Edge — bg-surface-soft */}
-      <AISearch />
-
-      {/* 7. Social Growth Spotlight — bg-surface-soft */}
-      <SocialGrowthSpotlight />
-
-      {/* surface-soft → white */}
-      <ArcDivider fill="white" className="bg-surface-soft" />
-
-      {/* Stats strip — bg-white */}
+      {/* 6. Stats Strip — bg-brand-600 (seamless with FreeWebsite dark section) */}
       <StatsStrip />
 
-      {/* 8. Results Highlights — bg-white */}
-      <ResultsHighlights />
+      {/* brand-600 → surface-soft */}
+      <ArcDivider fill="#F8FAFF" className="bg-brand-600" />
 
-      {/* white → surface-soft */}
-      <ArcDivider fill="#f0f4f8" className="bg-white" />
-
-      {/* 9. Testimonials — bg-surface-soft */}
+      {/* 7. Testimonials — bg-surface-soft */}
       <Testimonials />
 
-      {/* 10. Full Services Grid — bg-surface-soft */}
-      <ServicesGrid />
+      {/* surface-soft → brand-900 */}
+      <ArcDivider fill="#022852" className="bg-surface-soft" />
 
-      {/* 11. Final CTA — bg-surface-soft */}
+      {/* 8. Final CTA — bg-brand-900 */}
       <FinalCTA />
     </>
   )

@@ -207,7 +207,7 @@ export default function WebsitePage() {
         </div>
       </section>
 
-      <ArcDivider fill="#f0f4f8" className="bg-white" />
+      <ArcDivider fill="#F8FAFF" className="bg-white" />
 
       {/* ── HOW IT WORKS ─────────────────────────────────── */}
       <section className="bg-surface-soft py-[clamp(60px,8vw,96px)] px-5">
