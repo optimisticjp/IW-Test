@@ -1,92 +1,78 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { AUDIENCES } from '@/lib/constants'
+import { motion } from 'framer-motion'
+import { ArrowRightIcon } from '@/components/ui/Icons'
 
-const container = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
-}
-const card = {
-  hidden:  { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
-}
+const AUDIENCES = [
+  {
+    emoji: '🛍️',
+    title: 'Ecommerce & Shopify',
+    description: 'You have a store. We make it convert better, bring in more traffic, and keep customers coming back.',
+    href: '/for/ecommerce',
+  },
+  {
+    emoji: '🎯',
+    title: 'Creators & Coaches',
+    description: 'You have an audience. We help you turn it into a business with a proper website, funnels and email system.',
+    href: '/for/creators',
+  },
+  {
+    emoji: '🚀',
+    title: 'Startups',
+    description: 'You have a big idea. We give you a credible website, tracking, ads and the growth foundations to launch properly.',
+    href: '/for/startups',
+  },
+  {
+    emoji: '📍',
+    title: 'Local Businesses',
+    description: 'You have a local service. We make sure people in your area find you, contact you and book with you.',
+    href: '/for/local',
+  },
+]
 
 export default function WhoWeHelp() {
   return (
-    <section className="bg-surface-soft py-[clamp(60px,8vw,96px)] px-5">
-      <div className="max-w-[1080px] mx-auto">
+    <section className="bg-white section-pad">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-1.5 bg-brand-50 border border-brand-200 rounded-full px-3.5 py-1.5 text-[11px] font-extrabold tracking-[0.05em] uppercase text-brand-700 mb-5">
-            Who we work with
-          </div>
-          <h2 className="text-slate-900">One agency. Three kinds of growth.</h2>
+        <div className="text-center mb-16">
+          <h2 className="font-display font-extrabold text-4xl lg:text-5xl tracking-tight text-slate-900 mb-5">
+            Built for businesses that{' '}
+            <span className="text-gradient">want to grow</span>
+          </h2>
+          <p className="font-sans text-slate-500 text-lg max-w-2xl mx-auto">
+            Whatever your model, whatever your size — we have a proven system for it.
+          </p>
         </div>
 
-        {/* Cards */}
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-          variants={container}
-        >
-          {AUDIENCES.map((a) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {AUDIENCES.map(({ emoji, title, description, href }, i) => (
             <motion.div
-              key={a.label}
-              variants={card}
-              className="bg-white/75 backdrop-blur-xl border border-white/80 shadow-glass rounded-2xl p-7 hover:-translate-y-0.5 transition-all duration-200"
+              key={title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ delay: i * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
-              {/* Accent bar */}
-              <div
-                className="h-1 w-full rounded-full mb-6"
-                style={{ background: a.accentColor }}
-              />
-
-              {/* Label */}
-              <p
-                className="text-[10px] font-black tracking-widest2 uppercase mb-3"
-                style={{ color: a.accentColor }}
-              >
-                {a.label}
-              </p>
-
-              {/* Title */}
-              <h3 className="text-[clamp(17px,2.5vw,20px)] text-slate-900 mb-3">{a.title}</h3>
-
-              {/* Description */}
-              <p className="text-sm text-slate-500 leading-relaxed mb-5">{a.desc}</p>
-
-              {/* Services list */}
-              <ul className="mb-6 space-y-0">
-                {a.services.map((svc) => (
-                  <li
-                    key={svc}
-                    className="text-[13px] text-slate-500 py-1.5 border-b border-slate-100 last:border-0 flex items-center gap-2"
-                  >
-                    <span
-                      className="w-1.5 h-1.5 rounded-full shrink-0"
-                      style={{ background: a.accentColor }}
-                    />
-                    {svc}
-                  </li>
-                ))}
-              </ul>
-
-              {/* CTA */}
               <Link
-                href={a.href}
-                className="text-sm font-bold transition-opacity hover:opacity-70"
-                style={{ color: a.accentColor }}
+                href={href}
+                className="group relative block rounded-3xl p-8 border border-slate-200 bg-white hover:border-brand-200 hover:shadow-card-hover hover:-translate-y-1 transition-all duration-200 overflow-hidden"
               >
-                {a.cta} →
+                <div className="absolute top-0 right-0 w-48 h-48 rounded-full bg-brand-50/60 blur-2xl pointer-events-none" />
+                <div className="relative z-10">
+                  <span className="text-5xl leading-none">{emoji}</span>
+                  <h3 className="font-display font-bold text-2xl text-slate-900 mt-5 mb-3">{title}</h3>
+                  <p className="text-slate-500 leading-relaxed text-base mb-6 max-w-sm">{description}</p>
+                  <span className="inline-flex items-center gap-2 text-brand-600 font-semibold text-sm">
+                    Get started
+                    <ArrowRightIcon size={14} className="group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </div>
               </Link>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
 
       </div>
     </section>

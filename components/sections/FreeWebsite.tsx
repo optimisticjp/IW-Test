@@ -1,100 +1,65 @@
-'use client'
+import Link from 'next/link'
+import { CheckIcon } from '@/components/ui/Icons'
 
-import { motion } from 'framer-motion'
-import Button from '@/components/ui/Button'
-import { FREE_WEBSITE_POINTS, WEBSITE_CARD_ROWS } from '@/lib/constants'
-import { trackCTA } from '@/lib/analytics'
+const INCLUDED = [
+  'Custom design built for your industry',
+  'Mobile-first, fast-loading, modern',
+  'SEO foundations from day one',
+  'Contact forms + WhatsApp notifications',
+  'Lead capture and booking integration',
+  'Hosted and maintained — we handle it',
+]
 
 export default function FreeWebsite() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-brand-600 to-brand-800 py-[clamp(60px,8vw,96px)] px-5">
+    <section className="relative overflow-hidden bg-brand-700 section-pad">
 
-      {/* Background blob */}
-      <div className="absolute -top-1/4 right-0 w-[45vw] max-w-[520px] aspect-square rounded-full blur-3xl bg-white/10 pointer-events-none animate-glow-pulse" />
+      {/* Blobs */}
+      <div aria-hidden="true">
+        <div className="blob absolute w-96 h-96 -top-24 -right-12 bg-white/5" />
+        <div className="blob absolute w-72 h-72 -bottom-12 left-8 bg-white/5" />
+      </div>
 
-      <div className="relative max-w-[1080px] mx-auto flex flex-wrap gap-12 md:gap-[60px] items-center">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-        {/* Copy column */}
-        <motion.div
-          className="flex-[1_1_320px]"
-          initial={{ opacity: 0, x: -24 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-        >
-          <div className="inline-flex items-center gap-1.5 bg-white/20 border border-white/40 rounded-full px-3.5 py-1.5 text-[11px] font-extrabold tracking-[0.05em] uppercase text-white mb-5">
-            The Infinite Weblinks promise
-          </div>
-
-          <h2 className="text-white mb-5">
-            We build your site first.{' '}
-            <span className="gradient-text">You decide after.</span>
-          </h2>
-
-          <p className="text-slate-100 text-base leading-[1.75] mb-8">
-            Most agencies take a deposit before you&apos;ve seen a pixel. We build your real,
-            working website and send you a live link. Love it — we connect your domain.
-            Don&apos;t — you walk away with nothing owed.
-          </p>
-
-          <ul className="mb-9 space-y-3.5">
-            {FREE_WEBSITE_POINTS.map(({ bold, desc }) => (
-              <li key={bold} className="flex gap-3 items-start">
-                <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center shrink-0 mt-0.5">
-                  <span className="text-[10px] text-white font-bold">✓</span>
-                </span>
-                <span className="text-sm text-slate-100 leading-relaxed">
-                  <strong className="text-white font-bold">{bold}</strong> — {desc}
-                </span>
-              </li>
-            ))}
-          </ul>
-
-          <Button
-            href="/website"
-            size="lg"
-            variant="ghost"
-            onClick={() => trackCTA('Get my free website', 'free-website')}
-          >
-            Get your free website →
-          </Button>
-        </motion.div>
-
-        {/* Stats card — glassy dark card (website preview mockup) */}
-        <motion.div
-          className="flex-[1_1_260px] max-w-[340px]"
-          initial={{ opacity: 0, x: 24 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.6, delay: 0.15, ease: 'easeOut' }}
-        >
-          <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-7">
-            {/* Status bar */}
-            <div className="flex items-center gap-2 mb-5 text-[11px] text-slate-200 font-bold">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-glow-pulse" />
-              Your new site · Live preview
-            </div>
-
-            {/* Stats rows */}
-            {WEBSITE_CARD_ROWS.map(({ label, value, valueColor }) => (
-              <div
-                key={label}
-                className="flex justify-between items-center py-3 border-b border-white/15 last:border-0"
-              >
-                <span className="text-[13px] text-slate-200">{label}</span>
-                <span className="text-[13px] font-bold" style={{ color: valueColor }}>
-                  {value}
-                </span>
-              </div>
-            ))}
-
-            {/* Quote */}
-            <p className="mt-5 text-[12px] text-slate-200 leading-relaxed italic">
-              &ldquo;We&apos;d rather earn your business by showing you a website worth paying for.&rdquo;
+          {/* Left */}
+          <div>
+            <p className="text-brand-200 text-sm font-semibold uppercase tracking-widest mb-4">
+              The free website offer
+            </p>
+            <h2 className="font-display font-extrabold text-4xl lg:text-5xl text-white tracking-tight leading-[1.1] mb-6">
+              Your free website is ready to be built.
+            </h2>
+            <p className="font-sans text-brand-100 text-lg leading-relaxed mb-8">
+              No setup fee. No upfront payment. No contracts.
+              We design, build and launch your website — you only pay once you&apos;re growing with us.
+            </p>
+            <Link
+              href="/website"
+              className="inline-flex items-center gap-2 bg-white text-brand-700 font-bold text-base px-8 py-4 rounded-xl hover:bg-brand-50 shadow-lg hover:shadow-xl transition-all"
+            >
+              Claim your free website →
+            </Link>
+            <p className="text-brand-300 text-sm mt-4">
+              Builds in 7–14 days · You approve before going live
             </p>
           </div>
-        </motion.div>
 
+          {/* Right — glass checklist card */}
+          <div className="bg-white/10 backdrop-blur-sm border border-white/15 rounded-3xl p-8">
+            <h3 className="font-display font-bold text-xl text-white mb-6">What&apos;s included</h3>
+            <ul className="space-y-4">
+              {INCLUDED.map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <CheckIcon size={20} className="text-brand-300 mt-0.5 flex-shrink-0" />
+                  <span className="text-white/90 text-base">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+        </div>
       </div>
     </section>
   )

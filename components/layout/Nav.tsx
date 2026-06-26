@@ -1,178 +1,146 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { motion, AnimatePresence } from 'framer-motion'
-import { cn } from '@/lib/utils'
+import { ChevronDownIcon, ChevronRightIcon, MenuIcon, XIcon, ArrowRightIcon } from '@/components/ui/Icons'
 import { SITE } from '@/lib/constants'
-import Button from '@/components/ui/Button'
 
-const SERVICES_LINKS = [
-  { label: 'Websites & Stores',      href: '/services/build'         },
-  { label: 'Paid Growth',            href: '/services/paid-ads'      },
-  { label: 'Social & Creator Growth', href: '/services/social-growth' },
-  { label: 'SEO & AI Search',        href: '/services/ai-search'     },
-  { label: 'Funnels & Conversion',   href: '/services/funnels'       },
-  { label: 'Email / CRM / Retention', href: '/services/retain-scale' },
-]
-
-const WHO_LINKS = [
-  { label: 'Ecommerce & Shopify', href: '/for/ecommerce' },
-  { label: 'Creators & Coaches',  href: '/for/creators'  },
-  { label: 'Startups',            href: '/for/startups'  },
-]
-
-function HamburgerIcon({ isOpen }: { isOpen: boolean }) {
-  return (
-    <div className="relative w-5 h-[14px] flex flex-col justify-between">
-      <span
-        className={cn(
-          'block h-0.5 bg-current transition-all duration-300 origin-center rounded-full',
-          isOpen && 'rotate-45 translate-y-[6px]'
-        )}
-      />
-      <span
-        className={cn(
-          'block h-0.5 bg-current transition-all duration-300 rounded-full',
-          isOpen && 'opacity-0 scale-x-0'
-        )}
-      />
-      <span
-        className={cn(
-          'block h-0.5 bg-current transition-all duration-300 origin-center rounded-full',
-          isOpen && '-rotate-45 -translate-y-[6px]'
-        )}
-      />
-    </div>
-  )
+const SERVICES_MENU = {
+  featured: {
+    name:        'Websites & Stores',
+    description: 'We build your website first. No setup fee, no upfront cost. You approve before anything goes live.',
+    href:        '/services/build',
+  },
+  items: [
+    { name: 'Paid Growth',             desc: 'Google, Meta and TikTok ads managed for you.',  href: '/services/paid-ads'      },
+    { name: 'Social & Creator Growth', desc: 'Build an audience that converts to revenue.',    href: '/services/social-growth' },
+    { name: 'SEO & AI Search',         desc: 'Rank in Google and AI tools like ChatGPT.',     href: '/services/ai-search'     },
+    { name: 'Funnels & Conversion',    desc: 'Turn website visitors into paying customers.',   href: '/services/funnels'       },
+    { name: 'Email & CRM',             desc: 'Automation, retention and loyalty systems.',     href: '/services/retain-scale'  },
+  ],
 }
 
-function NavAccordion({
-  label,
-  links,
-  isOpen,
-  onToggle,
-  onLinkClick,
-}: {
-  label:       string
-  links:       { label: string; href: string }[]
-  isOpen:      boolean
-  onToggle:    () => void
-  onLinkClick: () => void
-}) {
-  return (
-    <div className="border-b border-slate-100">
-      <button
-        onClick={onToggle}
-        className="flex items-center justify-between w-full py-4 text-sm font-bold text-slate-700 hover:text-brand-600 transition-colors"
-      >
-        {label}
-        <motion.span
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.2 }}
-          className="text-slate-400 text-xs"
-        >
-          ▼
-        </motion.span>
-      </button>
+const AUDIENCE_MENU = [
+  { name: 'Ecommerce & Shopify', desc: 'More sales, better conversions.',   href: '/for/ecommerce', emoji: '🛍️' },
+  { name: 'Creators & Coaches',  desc: 'Turn followers into customers.',     href: '/for/creators',  emoji: '🎯' },
+  { name: 'Startups',            desc: 'Launch fast, grow smart.',           href: '/for/startups',  emoji: '🚀' },
+  { name: 'Local Businesses',    desc: 'More local leads and bookings.',     href: '/for/local',     emoji: '📍' },
+]
 
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.22, ease: 'easeOut' }}
-            className="overflow-hidden"
-          >
-            <div className="pb-3 space-y-1">
-              {links.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={onLinkClick}
-                  className="block py-2.5 pl-3 text-sm text-slate-500 hover:text-brand-600 transition-colors"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
-}
+type MenuKey = 'services' | 'audience' | null
 
 export default function Nav() {
-  const pathname                      = usePathname()
-  const [scrolled, setScrolled]       = useState(false)
-  const [menuOpen, setMenuOpen]       = useState(false)
-  const [openSection, setOpenSection] = useState<'services' | 'who' | null>(null)
+  const pathname                        = usePathname()
+  const [scrolled, setScrolled]         = useState(false)
+  const [activeMenu, setActiveMenu]     = useState<MenuKey>(null)
+  const [mobileOpen, setMobileOpen]     = useState(false)
+  const [mobileServices, setMobileServices] = useState(false)
+  const [mobileAudience, setMobileAudience] = useState(false)
+  const closeTimer                      = useRef<ReturnType<typeof setTimeout>>()
 
+  // Scroll detection
   useEffect(() => {
-    setMenuOpen(false)
-    setOpenSection(null)
-  }, [pathname])
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    const handler = () => setScrolled(window.scrollY > 20)
+    window.addEventListener('scroll', handler, { passive: true })
+    return () => window.removeEventListener('scroll', handler)
   }, [])
 
+  // Close everything on route change
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : ''
+    setMobileOpen(false)
+    setActiveMenu(null)
+  }, [pathname])
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
-  }, [menuOpen])
+  }, [mobileOpen])
 
-  const closeMenu = () => {
-    setMenuOpen(false)
-    setOpenSection(null)
-  }
-
-  const toggleSection = (section: 'services' | 'who') => {
-    setOpenSection((prev) => (prev === section ? null : section))
-  }
+  const openMenu  = (key: MenuKey) => { clearTimeout(closeTimer.current); setActiveMenu(key) }
+  const scheduleClose = () => { closeTimer.current = setTimeout(() => setActiveMenu(null), 160) }
+  const cancelClose   = () => clearTimeout(closeTimer.current)
 
   return (
     <>
+      {/* ── NAV BAR ──────────────────────────────────────────── */}
       <nav
-        className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-          scrolled || menuOpen
-            ? 'bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm'
-            : 'bg-white/80 backdrop-blur-sm border-b border-brand-100/60'
-        )}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled || mobileOpen
+            ? 'bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-nav'
+            : 'bg-transparent'
+        }`}
       >
-        <div className="max-w-[1100px] mx-auto px-5 md:px-10 flex items-center justify-between h-[66px]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 focus-visible:outline-none rounded-lg" onClick={closeMenu}>
-            <div className="w-9 h-9 rounded-[9px] bg-gradient-brand flex items-center justify-center text-white text-lg font-black leading-none select-none shadow-btn">
-              ∞
-            </div>
-            <span className="text-[15px] font-extrabold text-slate-900 tracking-tighter3 hidden sm:block">
-              {SITE.name}
-            </span>
+          <Link
+            href="/"
+            className="flex items-center gap-1 font-display font-extrabold text-[19px] tracking-tight focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:outline-none rounded"
+            onClick={() => setMobileOpen(false)}
+          >
+            <span className="text-slate-900">Infinite</span>
+            <span className="text-gradient">Weblinks</span>
           </Link>
 
-          {/* Desktop links */}
-          <ul className="hidden lg:flex items-center gap-7">
+          {/* Desktop nav */}
+          <ul className="hidden lg:flex items-center gap-1">
+            {/* Services trigger */}
+            <li
+              onMouseEnter={() => openMenu('services')}
+              onMouseLeave={scheduleClose}
+            >
+              <button
+                className={`inline-flex items-center gap-1 px-3.5 py-2 text-sm font-medium rounded-lg transition-colors ${
+                  activeMenu === 'services' ? 'text-brand-600 bg-brand-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                }`}
+                aria-expanded={activeMenu === 'services'}
+                aria-haspopup="true"
+              >
+                Services
+                <ChevronDownIcon
+                  size={14}
+                  className={`transition-transform duration-200 ${activeMenu === 'services' ? 'rotate-180' : ''}`}
+                />
+              </button>
+            </li>
+
+            {/* For Your Business trigger */}
+            <li
+              onMouseEnter={() => openMenu('audience')}
+              onMouseLeave={scheduleClose}
+            >
+              <button
+                className={`inline-flex items-center gap-1 px-3.5 py-2 text-sm font-medium rounded-lg transition-colors ${
+                  activeMenu === 'audience' ? 'text-brand-600 bg-brand-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                }`}
+                aria-expanded={activeMenu === 'audience'}
+                aria-haspopup="true"
+              >
+                For Your Business
+                <ChevronDownIcon
+                  size={14}
+                  className={`transition-transform duration-200 ${activeMenu === 'audience' ? 'rotate-180' : ''}`}
+                />
+              </button>
+            </li>
+
             {[
-              { label: 'Services',    href: '/services'      },
-              { label: 'Who We Help', href: '/for/ecommerce' },
-              { label: 'Results',     href: '/results'       },
-              { label: 'About',       href: '/about'         },
+              { label: 'Free Website', href: '/website', accent: true },
+              { label: 'Results',      href: '/results', accent: false },
+              { label: 'About',        href: '/about',   accent: false },
             ].map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className={cn(
-                    'text-sm font-medium transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 focus-visible:outline-none rounded',
-                    pathname === link.href ? 'text-brand-600 font-bold' : 'text-slate-600 hover:text-slate-900'
-                  )}
+                  className={`inline-flex items-center px-3.5 py-2 text-sm font-medium rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:outline-none ${
+                    link.accent
+                      ? 'text-brand-600 font-semibold hover:bg-brand-50'
+                      : pathname === link.href
+                      ? 'text-slate-900 font-semibold'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                  }`}
                 >
                   {link.label}
                 </Link>
@@ -180,112 +148,255 @@ export default function Nav() {
             ))}
           </ul>
 
-          {/* Right side */}
-          <div className="flex items-center gap-2">
-            <div className="hidden sm:flex items-center gap-2">
-              <Button href="/website" variant="outline" size="sm">
-                Free Website
-              </Button>
-              <Button href="/contact" variant="primary" size="sm">
-                Get Started
-              </Button>
-            </div>
-
-            <Button href="/website" variant="outline" size="sm" className="sm:hidden text-xs px-3 py-2">
-              Free Site
-            </Button>
-            <button
-              onClick={() => setMenuOpen((o) => !o)}
-              className="lg:hidden ml-1 p-2 text-slate-700 hover:text-brand-600 transition-colors focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 focus-visible:outline-none rounded"
-              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={menuOpen}
+          {/* Desktop right CTAs */}
+          <div className="hidden lg:flex items-center gap-2">
+            <Link
+              href="/contact"
+              className="text-sm font-medium text-slate-600 hover:text-slate-900 px-3 py-2 transition-colors"
             >
-              <HamburgerIcon isOpen={menuOpen} />
-            </button>
+              Contact
+            </Link>
+            <Link
+              href="/website"
+              className="inline-flex items-center gap-1.5 bg-gradient-brand text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-btn hover:shadow-btn-lg hover:scale-[1.02] active:scale-[0.99] transition-all duration-150 focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 focus-visible:outline-none"
+            >
+              Get a free website
+            </Link>
           </div>
 
+          {/* Mobile hamburger */}
+          <button
+            className="lg:hidden w-11 h-11 flex items-center justify-center text-slate-700 hover:text-brand-600 rounded-lg hover:bg-slate-50 transition-colors focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:outline-none"
+            onClick={() => setMobileOpen((o) => !o)}
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileOpen}
+          >
+            {mobileOpen ? <XIcon size={20} /> : <MenuIcon size={20} />}
+          </button>
         </div>
       </nav>
 
-      {/* Mobile menu */}
-      <AnimatePresence>
-        {menuOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-40 bg-black/20 backdrop-blur-[2px] lg:hidden"
-              onClick={closeMenu}
-            />
+      {/* ── MEGA MENU PANELS ─────────────────────────────────── */}
+      {activeMenu && (
+        <div
+          className="fixed top-16 left-0 right-0 z-40 shadow-mega"
+          onMouseEnter={cancelClose}
+          onMouseLeave={scheduleClose}
+        >
+          <div className="bg-white border-b border-slate-100">
+            <div className="max-w-7xl mx-auto px-8 py-8">
 
-            <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.22, ease: 'easeOut' }}
-              className="fixed top-[66px] left-0 right-0 z-40 bg-white border-b border-slate-200 shadow-2xl lg:hidden max-h-[calc(100vh-66px)] overflow-y-auto"
-            >
-              <div className="max-w-[480px] mx-auto px-5 py-4 pb-8">
+              {/* SERVICES panel */}
+              {activeMenu === 'services' && (
+                <div className="flex gap-8">
+                  {/* Featured (left 1/3) */}
+                  <Link
+                    href={SERVICES_MENU.featured.href}
+                    className="group flex-shrink-0 w-72 bg-brand-50 rounded-2xl p-6 border border-brand-100 hover:border-brand-200 hover:bg-brand-50 transition-colors"
+                    onClick={() => setActiveMenu(null)}
+                  >
+                    <span className="inline-flex text-xs bg-brand-100 text-brand-700 font-semibold px-2.5 py-1 rounded-full">
+                      Start here — free
+                    </span>
+                    <h3 className="font-display font-bold text-lg text-slate-900 mt-3">
+                      {SERVICES_MENU.featured.name}
+                    </h3>
+                    <p className="text-slate-500 text-sm mt-2 leading-relaxed">
+                      {SERVICES_MENU.featured.description}
+                    </p>
+                    <span className="inline-flex items-center gap-1 mt-4 text-brand-600 font-semibold text-sm group-hover:gap-2 transition-all">
+                      Get started free <ArrowRightIcon size={14} />
+                    </span>
+                  </Link>
 
-                <NavAccordion
-                  label="Services"
-                  links={SERVICES_LINKS}
-                  isOpen={openSection === 'services'}
-                  onToggle={() => toggleSection('services')}
-                  onLinkClick={closeMenu}
-                />
-
-                <NavAccordion
-                  label="Who We Help"
-                  links={WHO_LINKS}
-                  isOpen={openSection === 'who'}
-                  onToggle={() => toggleSection('who')}
-                  onLinkClick={closeMenu}
-                />
-
-                {[
-                  { label: 'Results', href: '/results' },
-                  { label: 'About',   href: '/about'   },
-                ].map((link) => (
-                  <div key={link.href} className="border-b border-slate-100">
-                    <Link
-                      href={link.href}
-                      onClick={closeMenu}
-                      className="block py-4 text-sm font-bold text-slate-700 hover:text-brand-600 transition-colors"
-                    >
-                      {link.label}
-                    </Link>
+                  {/* Service links (right 2/3) */}
+                  <div className="flex-1">
+                    <div className="grid grid-cols-2 gap-1">
+                      {SERVICES_MENU.items.map((item) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          className="group p-3 rounded-xl hover:bg-slate-50 transition-colors"
+                          onClick={() => setActiveMenu(null)}
+                        >
+                          <div className="font-display font-semibold text-sm text-slate-900 group-hover:text-brand-600 transition-colors">
+                            {item.name}
+                          </div>
+                          <div className="text-xs text-slate-400 mt-0.5 leading-relaxed">{item.desc}</div>
+                        </Link>
+                      ))}
+                    </div>
+                    <div className="border-t border-slate-100 mt-5 pt-4 flex items-center justify-between">
+                      <span className="text-sm text-slate-400">Not sure where to start?</span>
+                      <Link
+                        href="/website"
+                        className="text-sm font-semibold text-brand-600 hover:text-brand-700 inline-flex items-center gap-1"
+                        onClick={() => setActiveMenu(null)}
+                      >
+                        Get a free website — no cost to start <ArrowRightIcon size={14} />
+                      </Link>
+                    </div>
                   </div>
-                ))}
-
-                <div className="mt-6 space-y-3">
-                  <Button
-                    href="/website"
-                    variant="outline"
-                    size="lg"
-                    className="w-full justify-center"
-                    onClick={closeMenu}
-                  >
-                    Get a free website
-                  </Button>
-                  <Button
-                    href="/contact"
-                    variant="primary"
-                    size="lg"
-                    className="w-full justify-center"
-                    onClick={closeMenu}
-                  >
-                    Get Started →
-                  </Button>
                 </div>
+              )}
 
+              {/* AUDIENCE panel */}
+              {activeMenu === 'audience' && (
+                <div className="grid grid-cols-4 gap-3">
+                  {AUDIENCE_MENU.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="group p-5 rounded-xl hover:bg-slate-50 transition-colors"
+                      onClick={() => setActiveMenu(null)}
+                    >
+                      <span className="text-3xl leading-none">{item.emoji}</span>
+                      <div className="font-display font-semibold text-sm text-slate-900 mt-3 group-hover:text-brand-600 transition-colors">
+                        {item.name}
+                      </div>
+                      <div className="text-xs text-slate-400 mt-1 leading-relaxed">{item.desc}</div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── MOBILE DRAWER ────────────────────────────────────── */}
+      {/* Overlay */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm lg:hidden"
+          onClick={() => setMobileOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Drawer */}
+      <div
+        className={`fixed top-0 right-0 bottom-0 z-50 w-full max-w-sm bg-white shadow-2xl flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden ${
+          mobileOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+        aria-hidden={!mobileOpen}
+      >
+        {/* Drawer header */}
+        <div className="flex items-center justify-between px-5 h-16 border-b border-slate-100 shrink-0">
+          <Link
+            href="/"
+            className="font-display font-extrabold text-[18px] tracking-tight flex items-center gap-1"
+            onClick={() => setMobileOpen(false)}
+          >
+            <span className="text-slate-900">Infinite</span>
+            <span className="text-gradient">Weblinks</span>
+          </Link>
+          <button
+            className="w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-colors"
+            onClick={() => setMobileOpen(false)}
+            aria-label="Close menu"
+          >
+            <XIcon size={20} />
+          </button>
+        </div>
+
+        {/* Drawer body */}
+        <div className="flex-1 overflow-y-auto px-5 py-3">
+
+          {/* Services accordion */}
+          <div className="border-b border-slate-100">
+            <button
+              className="flex items-center justify-between w-full py-4 text-base font-bold text-slate-900 hover:text-brand-600 transition-colors"
+              onClick={() => setMobileServices((s) => !s)}
+            >
+              Services
+              <ChevronDownIcon size={16} className={`transition-transform duration-200 text-slate-400 ${mobileServices ? 'rotate-180' : ''}`} />
+            </button>
+            {mobileServices && (
+              <div className="pb-3 space-y-0.5">
+                <Link
+                  href={SERVICES_MENU.featured.href}
+                  className="flex items-center gap-2 py-2.5 pl-3 text-sm font-semibold text-brand-600 hover:text-brand-700 transition-colors"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  <ChevronRightIcon size={14} />
+                  {SERVICES_MENU.featured.name}
+                </Link>
+                {SERVICES_MENU.items.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="flex items-center gap-2 py-2.5 pl-3 text-sm text-slate-500 hover:text-brand-600 transition-colors"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    <ChevronRightIcon size={14} />
+                    {item.name}
+                  </Link>
+                ))}
               </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+            )}
+          </div>
+
+          {/* For Your Business accordion */}
+          <div className="border-b border-slate-100">
+            <button
+              className="flex items-center justify-between w-full py-4 text-base font-bold text-slate-900 hover:text-brand-600 transition-colors"
+              onClick={() => setMobileAudience((s) => !s)}
+            >
+              For Your Business
+              <ChevronDownIcon size={16} className={`transition-transform duration-200 text-slate-400 ${mobileAudience ? 'rotate-180' : ''}`} />
+            </button>
+            {mobileAudience && (
+              <div className="pb-3 space-y-0.5">
+                {AUDIENCE_MENU.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="flex items-center gap-2 py-2.5 pl-3 text-sm text-slate-500 hover:text-brand-600 transition-colors"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    <span>{item.emoji}</span>
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {[
+            { label: 'Free Website', href: '/website', bold: true },
+            { label: 'Results',      href: '/results', bold: false },
+            { label: 'About',        href: '/about',   bold: false },
+            { label: 'Contact',      href: '/contact', bold: false },
+          ].map((link) => (
+            <div key={link.href} className="border-b border-slate-100">
+              <Link
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className={`block py-4 text-base font-bold transition-colors ${
+                  link.bold ? 'text-brand-600 hover:text-brand-700' : 'text-slate-900 hover:text-brand-600'
+                }`}
+              >
+                {link.label}
+              </Link>
+            </div>
+          ))}
+        </div>
+
+        {/* Drawer footer */}
+        <div className="px-5 py-5 border-t border-slate-100 shrink-0 space-y-3">
+          <Link
+            href="/website"
+            className="w-full inline-flex items-center justify-center gap-2 bg-gradient-brand text-white font-bold text-base px-6 py-3.5 rounded-xl shadow-btn hover:shadow-btn-lg transition-all"
+            onClick={() => setMobileOpen(false)}
+          >
+            Get a free website <ArrowRightIcon size={16} />
+          </Link>
+          <p className="text-center text-xs text-slate-400">
+            No upfront cost · No long-term contracts
+          </p>
+        </div>
+      </div>
     </>
   )
 }

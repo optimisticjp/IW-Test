@@ -37,12 +37,25 @@
 
 /* ── COMPONENT UTILITIES ────────────────────────────────────── */
 @layer utilities {
-  /* Gradient text */
+  /* Gradient text (primary name) */
+  .text-gradient,
   .gradient-text {
     background: linear-gradient(135deg, #075aaa 0%, #4F8EF7 40%, #6366F1 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  /* Section vertical padding */
+  .section-pad {
+    padding-top:    5rem;
+    padding-bottom: 5rem;
+  }
+  @media (min-width: 1024px) {
+    .section-pad {
+      padding-top:    7rem;
+      padding-bottom: 7rem;
+    }
   }
 
   /* Glassmorphism card */

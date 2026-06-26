@@ -1,93 +1,140 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { PILLARS } from '@/lib/constants'
+import { motion } from 'framer-motion'
+import { MonitorIcon, ChartBarIcon, UsersIcon, SearchIcon, FunnelIcon, MailIcon } from '@/components/ui/Icons'
 
-const fadeUp = {
-  hidden:  { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as number[] } },
-}
-const stagger = {
-  hidden:  {},
-  visible: { transition: { staggerChildren: 0.07 } },
-}
+const CARDS = [
+  {
+    id:       'websites',
+    title:    'Websites & Stores',
+    desc:     'The foundation of everything. We build your website first, with no upfront cost. Modern, fast and built to convert.',
+    href:     '/services/build',
+    hero:     true,
+    Icon:     MonitorIcon,
+    dark:     false,
+  },
+  {
+    id:       'paid',
+    title:    'Paid Growth',
+    desc:     'Google, Meta and TikTok ads managed for you. We set up campaigns, test audiences and scale what works.',
+    href:     '/services/paid-ads',
+    Icon:     ChartBarIcon,
+  },
+  {
+    id:       'social',
+    title:    'Social & Creator',
+    desc:     'Build an audience that converts to revenue. Content strategy, posting systems and creator partnerships.',
+    href:     '/services/social-growth',
+    Icon:     UsersIcon,
+  },
+  {
+    id:       'seo',
+    title:    'SEO & AI Search',
+    desc:     'Show up in Google. Show up in ChatGPT, Perplexity and Claude. We handle both — technical SEO plus AI search visibility.',
+    href:     '/services/ai-search',
+    wide:     true,
+    dark:     true,
+    Icon:     SearchIcon,
+  },
+  {
+    id:       'funnels',
+    title:    'Funnels & Conversion',
+    desc:     'Turn visitors into buyers. Landing pages, A/B tests, lead capture systems and checkout optimisation.',
+    href:     '/services/funnels',
+    Icon:     FunnelIcon,
+  },
+  {
+    id:       'email',
+    title:    'Email & CRM',
+    desc:     'Automation, retention and loyalty systems. Welcome flows, abandoned cart, win-back and lifecycle journeys.',
+    href:     '/services/retain-scale',
+    tinted:   true,
+    Icon:     MailIcon,
+  },
+]
 
 export default function Pillars() {
   return (
-    <section className="bg-surface-soft py-[clamp(60px,8vw,96px)] px-5">
-      <div className="max-w-[1080px] mx-auto">
+    <section className="bg-surface-soft section-pad">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-1.5 bg-brand-50 border border-brand-200 rounded-full px-3.5 py-1.5 text-[11px] font-extrabold tracking-[0.05em] uppercase text-brand-700 mb-5">
-            What we do
-          </div>
-          <h2 className="text-slate-900">Six ways to grow your business</h2>
-          <p className="text-slate-500 text-base max-w-[440px] mx-auto mt-4">
-            Start with what you need. Add more when you&apos;re ready.
+        <div className="text-center mb-16">
+          <h2 className="font-display font-extrabold text-4xl lg:text-5xl tracking-tight text-slate-900 mb-5">
+            Everything you need.{' '}
+            <span className="text-gradient">One team.</span>{' '}
+            No handoffs.
+          </h2>
+          <p className="font-sans text-slate-500 text-lg max-w-2xl mx-auto">
+            Six core services, delivered by one team, under one strategy.
           </p>
         </div>
 
-        {/* Bento grid */}
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[minmax(180px,auto)]"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-60px' }}
-          variants={stagger}
-        >
-          {PILLARS.map((p, i) => {
-            const isFeatured = i === 0 || i === 3
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {CARDS.map(({ id, title, desc, href, hero, wide, dark, tinted, Icon }, i) => {
+            const colSpan = hero || wide ? 'lg:col-span-2' : ''
+
+            let cardClass = ''
+            if (hero)   cardClass = 'bg-gradient-brand text-white'
+            else if (dark)   cardClass = 'bg-slate-900 text-white'
+            else if (tinted) cardClass = 'bg-brand-50 border border-brand-100'
+            else             cardClass = 'bg-white border border-slate-200'
+
             return (
               <motion.div
-                key={p.title}
-                variants={fadeUp}
-                className={isFeatured ? 'sm:col-span-2' : ''}
+                key={id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ delay: i * 0.07, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className={colSpan}
               >
                 <Link
-                  href={p.href}
-                  className={`group flex flex-col h-full rounded-card-lg p-6 border transition-all duration-200 hover:-translate-y-0.5 ${
-                    i === 0
-                      ? 'bg-gradient-to-br from-brand-600 to-brand-800 text-white border-brand-700 hover:shadow-glow-sm'
-                      : i === 3
-                      ? 'bg-gradient-to-br from-slate-900 to-brand-950 text-white border-slate-800 hover:shadow-glow-sm'
-                      : 'bg-white border-border hover:border-brand-300 hover:shadow-card-md'
-                  }`}
+                  href={href}
+                  className={`group rounded-3xl p-6 lg:p-8 flex flex-col min-h-[220px] ${cardClass} ${
+                    hero ? 'hover:scale-[1.01]' : 'hover:shadow-card-hover hover:-translate-y-1'
+                  } transition-all duration-200 block`}
                 >
-                  <div className="flex justify-between items-start mb-4">
-                    <span className={`text-[28px] leading-none ${i === 0 || i === 3 ? 'brightness-110' : ''}`}>
-                      {p.icon}
-                    </span>
-                    <span className={`text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity ${i === 0 || i === 3 ? 'text-white/70' : 'text-brand-600'}`}>
-                      Explore →
-                    </span>
-                  </div>
-
-                  <h3 className={`text-[17px] mb-2 ${i === 0 || i === 3 ? 'text-white' : 'text-slate-900'}`}>
-                    {p.title}
-                  </h3>
-                  <p className={`text-[13px] leading-relaxed flex-1 ${i === 0 || i === 3 ? 'text-white/75' : 'text-slate-500'}`}>
-                    {p.desc}
-                  </p>
-
-                  {isFeatured && (
-                    <ul className="mt-4 pt-4 border-t border-white/20 flex flex-wrap gap-2">
-                      {p.services.slice(0, 3).map((svc) => (
-                        <li
-                          key={svc}
-                          className="text-[11px] font-medium bg-white/15 rounded-full px-2.5 py-1 text-white/90"
-                        >
-                          {svc}
-                        </li>
-                      ))}
-                    </ul>
+                  {hero ? (
+                    <>
+                      <div className="flex items-center justify-between mb-auto">
+                        <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-white">
+                          <Icon size={20} />
+                        </div>
+                        <span className="bg-white/20 text-white text-xs px-3 py-1 rounded-full font-medium">
+                          Start here — free
+                        </span>
+                      </div>
+                      <div className="mt-6">
+                        <h3 className="font-display font-extrabold text-2xl text-white mb-2">{title}</h3>
+                        <p className="text-white/80 text-base leading-relaxed mb-4">{desc}</p>
+                        <span className="text-white/60 text-sm font-medium">Learn more →</span>
+                      </div>
+                    </>
+                  ) : dark ? (
+                    <>
+                      <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white mb-4">
+                        <Icon size={20} />
+                      </div>
+                      <h3 className="font-display font-bold text-xl text-white mb-2 mt-0">{title}</h3>
+                      <p className="text-slate-400 text-sm leading-relaxed flex-1">{desc}</p>
+                      <span className="text-brand-400 text-sm font-semibold mt-4">Learn more →</span>
+                    </>
+                  ) : (
+                    <>
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${tinted ? 'bg-brand-100 text-brand-600' : 'bg-brand-50 text-brand-600'}`}>
+                        <Icon size={20} />
+                      </div>
+                      <h3 className="font-display font-bold text-lg text-slate-900 mb-2">{title}</h3>
+                      <p className="text-slate-500 text-sm leading-relaxed flex-1">{desc}</p>
+                      <span className="text-brand-600 text-sm font-semibold mt-4">Learn more →</span>
+                    </>
                   )}
                 </Link>
               </motion.div>
             )
           })}
-        </motion.div>
+        </div>
 
       </div>
     </section>

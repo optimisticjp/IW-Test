@@ -70,6 +70,9 @@ const config: Config = {
         'glass':      '0 2px 20px rgba(7,90,170,0.07), inset 0 1px 0 rgba(255,255,255,0.8)',
         'glow-sm':    '0 0 32px rgba(7,90,170,0.15)',
         'glow-md':    '0 0 64px rgba(7,90,170,0.18)',
+        'nav':        '0 1px 0 rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04)',
+        'mega':       '0 8px 32px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04)',
+        'xs':         '0 1px 2px rgba(0,0,0,0.05)',
         // legacy
         'btn-brand':  '0 4px 20px rgba(7,90,170,0.40)',
         'glow-brand': '0 0 40px rgba(7,90,170,0.15)',
@@ -95,6 +98,9 @@ const config: Config = {
         'fade-up':        'fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both',
         'scale-in':       'scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both',
         'count-up':       'fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both',
+        'blob':           'gradientMove 12s ease-in-out 0s infinite alternate',
+        'blob-delayed':   'gradientMove 12s ease-in-out 4s infinite alternate',
+        'marquee-rev':    'marquee 28s linear 0s infinite reverse',
         // legacy
         'glow-pulse':     'glowPulse 6s ease-in-out infinite',
         'gradient-shift': 'gradientShift 9s ease-in-out infinite',

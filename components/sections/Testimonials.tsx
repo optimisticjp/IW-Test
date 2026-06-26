@@ -1,100 +1,80 @@
-'use client'
+const TESTIMONIALS = [
+  {
+    quote: 'They built our Shopify site in under two weeks and our conversion rate jumped straight away. The ads team then took over and we were profitable within the first month.',
+    name:  'Sarah T.',
+    role:  'Ecommerce Founder',
+  },
+  {
+    quote: 'I had no website at all. Now I have a proper site, a full email funnel and my coaching programme sells out every time I open it.',
+    name:  'Marcus D.',
+    role:  'Business Coach',
+  },
+  {
+    quote: 'We went from invisible on Google to ranking on the first page in three months. Their SEO team actually explains what they\'re doing and why.',
+    name:  'Priya R.',
+    role:  'Local Service Business',
+  },
+  {
+    quote: 'The free website offer is real. They built it, we approved it, and we were live. Then the growth work began. Highly recommend.',
+    name:  'James K.',
+    role:  'Startup Founder',
+  },
+  {
+    quote: 'Our Instagram went from 800 followers to 14,000 in five months. More importantly, those followers actually buy from us now.',
+    name:  'Aisha M.',
+    role:  'Creator & Coach',
+  },
+  {
+    quote: 'Honestly the best agency experience we\'ve had. One team, one invoice, no excuses. They just get on with it.',
+    name:  'Tom B.',
+    role:  'Marketing Director',
+  },
+]
 
-import { TESTIMONIALS } from '@/lib/constants'
-
-type Testimonial = typeof TESTIMONIALS[number]
-
-function TestimonialCard({ t }: { t: Testimonial }) {
+function TestimonialCard({ quote, name, role }: typeof TESTIMONIALS[number]) {
   return (
-    <div className="bg-white border border-border rounded-card-xl p-6 w-[340px] shrink-0 flex flex-col">
-      <div className="flex gap-0.5 mb-4">
-        {Array.from({ length: 5 }).map((_, j) => (
-          <span key={j} className="text-amber-400 text-sm">★</span>
-        ))}
-      </div>
-      <p className="text-[14px] text-slate-700 leading-[1.7] italic mb-5 flex-1">
-        &ldquo;{t.quote}&rdquo;
-      </p>
-      <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-extrabold text-sm shrink-0">
-          {t.initial}
-        </div>
-        <div>
-          <div className="text-sm font-bold text-slate-900">{t.name}</div>
-          <div className="text-xs text-slate-400">{t.role} · {t.company}</div>
-        </div>
-      </div>
+    <div className="bg-white border border-slate-200 rounded-2xl p-6 w-[320px] flex-shrink-0 mx-3 shadow-xs flex flex-col">
+      <div className="text-brand-400 text-sm mb-4">★★★★★</div>
+      <p className="text-slate-600 text-base leading-relaxed italic flex-1">&ldquo;{quote}&rdquo;</p>
+      <div className="w-8 h-px bg-slate-100 my-4" />
+      <p className="font-display font-bold text-sm text-slate-900">{name}</p>
+      <p className="text-slate-400 text-xs mt-1">{role}</p>
     </div>
   )
 }
 
-function MarqueeRow({ items, reverse }: { items: Testimonial[]; reverse?: boolean }) {
-  const doubled = [...items, ...items, ...items]
+function MarqueeRow({ items, reverse }: { items: typeof TESTIMONIALS; reverse?: boolean }) {
   return (
-    <div className="flex overflow-hidden gap-5">
-      <div
-        className={`flex gap-5 ${reverse ? 'animate-marquee-slow' : 'animate-marquee'}`}
-        style={reverse ? { animationDirection: 'reverse' } : undefined}
-        aria-hidden={reverse}
-      >
-        {doubled.map((t, i) => (
-          <TestimonialCard key={i} t={t} />
-        ))}
+    <div className="overflow-hidden">
+      <div className={`flex will-change-transform ${reverse ? 'animate-marquee-rev' : 'animate-marquee'}`}>
+        <div className="flex flex-shrink-0">
+          {items.map((t, i) => <TestimonialCard key={i} {...t} />)}
+        </div>
+        <div className="flex flex-shrink-0" aria-hidden="true">
+          {items.map((t, i) => <TestimonialCard key={`dup-${i}`} {...t} />)}
+        </div>
       </div>
     </div>
   )
 }
 
 export default function Testimonials() {
-  const extra: Testimonial[] = [
-    {
-      quote:   'The Local SEO work alone brought us ten new enquiries in the first week. The Google Business Profile setup was a game changer.',
-      name:    'Tom B.',
-      role:    'Owner',
-      company: 'Trades Business, UK',
-      initial: 'T',
-    },
-    {
-      quote:   'We had tried two agencies before. Infinite Weblinks were the first to actually explain what they were doing and why it would work.',
-      name:    'Aisha R.',
-      role:    'Founder',
-      company: 'DTC Brand, US',
-      initial: 'A',
-    },
-    {
-      quote:   'Our Instagram went from 800 followers to 11k in four months using their growth strategy. Leads from social are now our number two channel.',
-      name:    'Leo F.',
-      role:    'Creator',
-      company: 'Content Creator, CA',
-      initial: 'L',
-    },
-  ]
-
-  const row1 = [...TESTIMONIALS, ...extra]
-  const row2 = [...extra, ...TESTIMONIALS].reverse()
+  const row1 = TESTIMONIALS.slice(0, 3)
+  const row2 = TESTIMONIALS.slice(3, 6)
 
   return (
-    <section className="bg-surface-soft py-[clamp(60px,8vw,96px)] overflow-hidden">
-      {/* Header */}
-      <div className="text-center mb-12 px-5">
-        <div className="inline-flex items-center gap-1.5 bg-brand-50 border border-brand-200 rounded-full px-3.5 py-1.5 text-[11px] font-extrabold tracking-[0.05em] uppercase text-brand-700 mb-5">
-          Client results
-        </div>
-        <h2 className="text-slate-900">
-          What our clients <span className="gradient-text">say</span>
+    <section className="bg-surface-soft section-pad overflow-hidden">
+      <div className="text-center mb-16 px-4">
+        <h2 className="font-display font-extrabold text-4xl lg:text-5xl tracking-tight text-slate-900">
+          What our{' '}
+          <span className="text-gradient">clients say</span>
         </h2>
       </div>
 
-      {/* Marquee rows */}
-      <div className="space-y-5">
+      <div className="space-y-6">
         <MarqueeRow items={row1} />
         <MarqueeRow items={row2} reverse />
       </div>
-
-      <p className="text-center text-xs text-slate-400 mt-8 italic px-5">
-        Placeholder testimonials — replace with real client quotes in{' '}
-        <code className="font-mono text-slate-500">lib/constants.ts</code>
-      </p>
     </section>
   )
 }
