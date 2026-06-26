@@ -1,16 +1,6 @@
 'use client'
 
-/**
- * ABOUT PAGE — WHAT TO FILL IN BEFORE GOING LIVE
- *
- * Search this file for [PLACEHOLDER] to find everything that needs
- * updating with real information. There are 4 things:
- *
- * 1. FOUNDER_NAME — your name
- * 2. FOUNDER_STORY — a short paragraph about how you started the business
- * 3. FOUNDED_YEAR — the year you started
- * 4. FOUNDER_BACKGROUND — one sentence on what you did before IWL
- */
+// TODO: Replace FOUNDER_NAME and FOUNDED_YEAR with real values before going live.
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
@@ -19,17 +9,12 @@ import FinalCTA from '@/components/sections/FinalCTA'
 import { SITE, MARKETS } from '@/lib/constants'
 import MeshGradient from '@/components/ui/MeshGradient'
 
-// ── EDIT THESE ───────────────────────────────────────────────
-const FOUNDER_NAME     = 'Your Name'        // [PLACEHOLDER] replace with your name
-const FOUNDED_YEAR     = '20XX'             // [PLACEHOLDER] replace with year founded
-const FOUNDER_BACKGROUND = 'background in digital marketing and web development' // [PLACEHOLDER]
-const FOUNDER_STORY = `
-  [PLACEHOLDER — replace this with 2–3 sentences about how you started Infinite Weblinks.
-  E.g. "I started Infinite Weblinks after seeing too many businesses spend money on websites
-  that looked good but didn't actually work. The free website model came from a simple belief:
-  if we build it first, you can see the value before committing to anything."]
-` // [PLACEHOLDER]
-// ─────────────────────────────────────────────────────────────
+// TODO: replace with real founder name
+const FOUNDER_NAME       = '[Founder Name]'
+// TODO: replace with real founding year
+const FOUNDED_YEAR       = '[Year]'
+const FOUNDER_BACKGROUND = 'background in digital marketing and web development'
+const FOUNDER_STORY = `I started Infinite Weblinks after watching too many good businesses get burned by agencies that charged upfront, delivered slow, and moved on to the next client. The free website model came from a simple belief: if we build it first, you can judge the work before committing to anything. That flips the usual agency dynamic on its head, and it turns out businesses respond well to being shown rather than sold.`
 
 const DIFFERENTIATORS = [
   {
