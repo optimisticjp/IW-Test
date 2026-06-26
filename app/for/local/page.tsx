@@ -2,14 +2,14 @@ import type { Metadata } from 'next'
 import AudiencePageTemplate from '@/components/templates/AudiencePageTemplate'
 import { AUDIENCE_PAGES } from '@/lib/audience-pages'
 
-const data = AUDIENCE_PAGES.creators
+const data = AUDIENCE_PAGES.local
 
 export const metadata: Metadata = {
   title:       data.seoTitle,
   description: data.seoDesc,
-  alternates:  { canonical: 'https://infiniteweblinks.com/for/creators' },
+  alternates:  { canonical: 'https://infiniteweblinks.com/for/local' },
 }
 
-export default function CreatorsPage() {
+export default function LocalPage() {
   return <AudiencePageTemplate data={data} />
 }

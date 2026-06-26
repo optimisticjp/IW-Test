@@ -8,9 +8,10 @@ type Status = 'idle' | 'submitting' | 'success' | 'error'
 
 interface ContactFormProps {
   formType?: 'contact' | 'website'
+  theme?:    'light' | 'dark'
 }
 
-export default function ContactForm({ formType = 'contact' }: ContactFormProps) {
+export default function ContactForm({ formType = 'contact', theme = 'light' }: ContactFormProps) {
   const [status, setStatus]     = useState<Status>('idle')
   const startedRef              = useRef(false)
 
@@ -53,20 +54,22 @@ export default function ContactForm({ formType = 'contact' }: ContactFormProps) 
         <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-5">
           <span className="text-green-600 text-2xl">✓</span>
         </div>
-        <h3 className="text-xl font-bold text-slate-900 mb-3">
+        <h3 className={`text-xl font-bold mb-3 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
           {formType === 'website' ? 'Request received!' : 'Message sent!'}
         </h3>
-        <p className="text-slate-500 text-sm leading-relaxed">
+        <p className={`text-sm leading-relaxed ${theme === 'dark' ? 'text-brand-200' : 'text-slate-500'}`}>
           {formType === 'website'
-            ? "We'll start building your site and send you a live preview link within 3–5 business days."
-            : "We usually respond within one business day. Check your inbox — or your spam just in case."}
+            ? "We'll start building your site and send you a live preview link within 3 to 5 business days."
+            : "We usually respond within one business day. Check your inbox, or your spam just in case."}
         </p>
       </div>
     )
   }
 
   const inputClass = 'w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:ring-offset-0 focus:border-brand-600 transition-colors min-h-[44px]'
-  const labelClass = 'block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wider'
+  const labelClass = theme === 'dark'
+    ? 'block text-xs font-bold text-brand-200 mb-1.5 uppercase tracking-wider'
+    : 'block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wider'
 
   return (
     <form onSubmit={handleSubmit} onFocus={handleFirstInteraction} className="space-y-4">
@@ -201,7 +204,7 @@ export default function ContactForm({ formType = 'contact' }: ContactFormProps) 
             : 'Send message →'}
       </button>
 
-      <p className="text-xs text-slate-400 text-center">
+      <p className={`text-xs text-center ${theme === 'dark' ? 'text-brand-300' : 'text-slate-400'}`}>
         No spam. We respond within one business day.
       </p>
     </form>

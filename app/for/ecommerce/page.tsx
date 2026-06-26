@@ -7,6 +7,7 @@ const data = AUDIENCE_PAGES.ecommerce
 export const metadata: Metadata = {
   title:       data.seoTitle,
   description: data.seoDesc,
+  alternates:  { canonical: 'https://infiniteweblinks.com/for/ecommerce' },
 }
 
 export default function EcommercePage() {

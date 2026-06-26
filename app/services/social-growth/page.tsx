@@ -7,6 +7,7 @@ const data = SERVICE_PAGES['social-growth']
 export const metadata: Metadata = {
   title:       data.seoTitle,
   description: data.seoDesc,
+  alternates:  { canonical: 'https://infiniteweblinks.com/services/social-growth' },
 }
 
 export default function SocialGrowthPage() {

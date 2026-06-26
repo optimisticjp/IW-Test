@@ -7,6 +7,7 @@ const data = SERVICE_PAGES['retain-scale']
 export const metadata: Metadata = {
   title:       data.seoTitle,
   description: data.seoDesc,
+  alternates:  { canonical: 'https://infiniteweblinks.com/services/retain-scale' },
 }
 
 export default function RetainScalePage() {

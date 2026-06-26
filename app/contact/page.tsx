@@ -6,8 +6,9 @@ import GlassCard from '@/components/ui/GlassCard'
 import { SITE } from '@/lib/constants'
 
 export const metadata: Metadata = {
-  title:       'Contact Us',
+  title:       'Contact Infinite Weblinks | Get in Touch',
   description: 'Get in touch to start your free website, book a growth call or ask us anything. We respond within one business day.',
+  alternates:  { canonical: 'https://infiniteweblinks.com/contact' },
 }
 
 const whatsapp = (SITE as Record<string, string>).whatsapp

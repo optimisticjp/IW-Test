@@ -94,6 +94,21 @@ export const AUDIENCES = [
     cta:  'See startup services',
     href: '/for/startups',
   },
+  {
+    accentColor: '#059669',
+    label:       'Local & Service Businesses',
+    title:       'More calls, more bookings, more local customers',
+    desc:        'Website, local SEO, Google Search Ads and a booking system so your phone stops being quiet.',
+    services:    [
+      'Local SEO & Google Business',
+      'Google Search Ads',
+      'Booking & Enquiry Flows',
+      'Lead Follow-Up Automation',
+      'AI Search Visibility',
+    ],
+    cta:  'Get more leads',
+    href: '/for/local',
+  },
 ]
 
 // ── SERVICE PILLARS ──────────────────────────────────────────
